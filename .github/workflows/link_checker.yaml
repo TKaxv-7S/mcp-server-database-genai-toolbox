@@ -78,7 +78,7 @@ jobs:
             ${{ steps.changed-files.outputs.CHECK_FILES }}
           output: lychee-report.md
           format: markdown
-          fail: true           
+          fail: true            
           jobSummary: false    
           debug: false
         env:
