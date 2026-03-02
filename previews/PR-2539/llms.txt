@@ -72,6 +72,7 @@ List of reference documentation for resources in Toolbox.
   - [CockroachDB](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/sources/cockroachdb/): CockroachDB is a distributed SQL database built for cloud applications.
   - [Couchbase](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/sources/couchbase/): A "couchbase" source connects to a Couchbase database.
   - [Dataplex](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/sources/dataplex/): Dataplex Universal Catalog is a unified, intelligent governance solution for data and AI assets in Google Cloud. Dataplex Universal Catalog powers AI, analytics, and business intelligence at scale.
+  - [Dataproc Clusters](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/sources/dataproc/): Google Cloud Dataproc Clusters lets you provision and manage Apache Spark and Hadoop clusters.
   - [Dgraph](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/sources/dgraph/): Dgraph is fully open-source, built-for-scale graph database for Gen AI workloads
   - [Elasticsearch](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/sources/elasticsearch/): Elasticsearch is a distributed, free and open search and analytics engine  for all types of data, including textual, numerical, geospatial, structured,  and unstructured.
   - [Firebird](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/sources/firebird/): Firebird is a powerful, cross-platform, and open-source relational database.
@@ -118,6 +119,7 @@ List of reference documentation for resources in Toolbox.
   - [Couchbase](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/tools/couchbase/): Tools that work with Couchbase Sources.
   - [Dataform](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/tools/dataform/): Tools that work with Dataform.
   - [Dataplex](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/tools/dataplex/): Tools that work with Dataplex Sources.
+  - [Dataproc](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/tools/dataproc/): Tools that work with Google Cloud Dataproc Sources.
   - [Dgraph](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/tools/dgraph/): Tools that work with Dgraph Sources.
   - [Elasticsearch](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/tools/elasticsearch/): Tools that work with Elasticsearch Sources.
   - [Firebird](https://googleapis.github.io/genai-toolbox/previews/PR-2539/resources/tools/firebird/): Tools that work with Firebird Sources.
@@ -175,7 +177,19 @@ A list of other information related to Toolbox.
 ### SDKs
 
 Client SDKs to connect to the MCP Toolbox server.
-- [Go SDK](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/go-sdk/): Go lang client SDK- [JS SDK](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/js-sdk/): Javascript client SDK- [Python SDK](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/python-sdk/): Python client SDK
+- [Python](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/python-sdk/): Python SDKs to connect to the MCP Toolbox server.
+  - [ADK](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/python-sdk/adk/): MCP Toolbox SDK for integrating functionalities of MCP Toolbox into your ADK apps.
+  - [Core](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/python-sdk/core/): MCP Toolbox Core SDK for integrating functionalities of MCP Toolbox into your Agentic apps.
+  - [LangChain/LangGraph](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/python-sdk/langchain/): MCP Toolbox SDK for integrating functionalities of MCP Toolbox into your LangChain/LangGraph apps.
+  - [LlamaIndex](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/python-sdk/llamaindex/): MCP Toolbox LlamaIndex SDK for integrating functionalities of MCP Toolbox into your LlamaIndex apps.
+- [Javascript](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/js-sdk/): Javascript SDKs to connect to the MCP Toolbox server.
+  - [ADK](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/js-sdk/adk/): MCP Toolbox SDK for integrating functionalities of MCP Toolbox into your ADK apps.
+  - [Core](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/js-sdk/core/): MCP Toolbox Core SDK for integrating functionalities of MCP Toolbox into your Agentic apps.
+- [Go](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/go-sdk/): Go SDKs to connect to the MCP Toolbox server.
+  - [ADK Package](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/go-sdk/tbadk/): MCP Toolbox ADK for integrating functionalities of MCP Toolbox into your Agentic apps.
+  - [Core Package](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/go-sdk/core/): MCP Toolbox Core SDK for integrating functionalities of MCP Toolbox into your Agentic apps.
+  - [Genkit Package](https://googleapis.github.io/genai-toolbox/previews/PR-2539/sdks/go-sdk/tbgenkit/): MCP Toolbox Genkit for integrating functionalities of MCP Toolbox into your Agentic apps.
+
 ### Reference
 
 This section contains reference documentation.
