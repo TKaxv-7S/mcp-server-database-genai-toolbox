@@ -11325,6 +11325,39 @@ parameters:
     description: 1 to 4 digit number
 ```
 
+## Prebuilt vs. Custom Tools
+
+MCP Toolbox provides two main approaches for tools: **prebuilt** and **custom**.
+
+[**Prebuilt tools**](../../reference/prebuilt-tools/) are ready to use out of
+the box. For example, a tool like
+[`postgres-execute-sql`](postgres/postgres-execute-sql/) has fixed parameters
+and always works the same way, allowing the agent to execute arbitrary SQL.
+While these are convenient, they are typically only safe when a developer is in
+the loop (e.g., during prototyping, developing, or debugging).
+
+For application use cases, you need to be wary of security risks such as prompt
+injection or data poisoning. Allowing an LLM to execute arbitrary queries in
+production is highly dangerous.
+
+To secure your application, you should **use custom tools** to suit your
+specific schema and application needs. Creating a custom tool restricts the
+agent's capabilities to only what is necessary. For example, you can use the
+[`postgres-sql`](postgres/postgres-sql/) tool to define a specific action. This
+typically involves:
+
+*   **Prepared Statements:** Writing a SQL query ahead of time and letting the
+    agent only fill in specific [basic parameters](#basic-parameters).
+*   [**Bound Parameters:**](../../sdks/python-sdk/core/#option-a-binding-parameters-to-a-loaded-tool)
+    Passing parameters directly to the underlying engine as bound variables
+    rather than allowing the LLM to provide them.
+*   **Secure Parameters:** Using mechanisms like [authenticated
+    parameters](#authenticated-parameters) to restrict what data the agent can
+    access based on the logged-in user.
+
+By creating custom tools, you significantly reduce the attack surface and ensure
+the agent operates within defined, safe boundaries.
+
 ## Specifying Parameters
 
 Parameters for each Tool will define what inputs the agent will need to provide
@@ -20251,7 +20284,7 @@ This page describes the `toolbox` command-line options.
 |              | `--log-level`              | Specify the minimum level logged. Allowed: 'DEBUG', 'INFO', 'WARN', 'ERROR'.                                                                                                     | `info`      |
 |              | `--logging-format`         | Specify logging format to use. Allowed: 'standard' or 'JSON'.                                                                                                                    | `standard`  |
 | `-p`         | `--port`                   | Port the server will listen on.                                                                                                                                                  | `5000`      |
-|              | `--prebuilt`               | Use one or more prebuilt tool configuration by source type. See [Prebuilt Tools Reference](prebuilt-tools.md) for allowed values.                                                          |             |
+|              | `--prebuilt`               | Use one or more prebuilt tool configuration by source type. See [Prebuilt Tools Reference](prebuilt-tools.md) for allowed values.                                                |             |
 |              | `--stdio`                  | Listens via MCP STDIO instead of acting as a remote HTTP server.                                                                                                                 |             |
 |              | `--telemetry-gcp`          | Enable exporting directly to Google Cloud Monitoring.                                                                                                                            |             |
 |              | `--telemetry-otlp`         | Enable exporting using OpenTelemetry Protocol (OTLP) to the specified endpoint (e.g. 'http://127.0.0.1:4318')                                                                    |             |
@@ -20263,6 +20296,7 @@ This page describes the `toolbox` command-line options.
 |              | `--allowed-origins`        | Specifies a list of origins permitted to access this server for CORs access.                                                                                                     | `*`         |
 |              | `--allowed-hosts`          | Specifies a list of hosts permitted to access this server to prevent DNS rebinding attacks.                                                                                      | `*`         |
 |              | `--user-agent-metadata`    | Appends additional metadata to the User-Agent.                                                                                                                                   |             |
+|              | `--poll-interval`          | Specifies the polling frequency (seconds) for configuration file updates.                                                                                                        | `0`         |
 | `-v`         | `--version`                | version for toolbox                                                                                                                                                              |             |
 
 ## Sub Commands
@@ -20368,8 +20402,18 @@ used at a time.
 
 ### Hot Reload
 
-Toolbox enables dynamic reloading by default. To disable, use the
-`--disable-reload` flag.
+Toolbox supports two methods for detecting configuration changes: **Push**
+(event-driven) and **Poll** (interval-based). To completely disable all hot
+reloading, use the `--disable-reload` flag.
+
+* **Push (Default):** Toolbox uses a highly efficient push system that listens
+  for instant OS-level file events to reload configurations the moment you save.
+* **Poll (Fallback):** Alternatively, you can use the
+  `--poll-interval=<seconds>` flag to actively check for updates at a set
+  cadence. Unlike the push system, polling "pulls" the file status manually,
+  which is a great fallback for network drives or container volumes where OS
+  events might get dropped. Set the interval to `0` to disable the polling
+  system.
 
 ### Toolbox UI
 
@@ -20923,6 +20967,23 @@ See [Usage Examples](../reference/cli.md#examples).
     *   `add_dashboard_element`: Adds a tile to a dashboard.
     *   `add_dashboard_filter`: Adds a filter to a dashboard.
     *   `generate_embed_url`: Generate an embed url for content.
+
+## Looker Dev
+
+*   `--prebuilt` value: `looker-dev`
+*   **Environment Variables:**
+    *   `LOOKER_BASE_URL`: The URL of your Looker instance.
+    *   `LOOKER_CLIENT_ID`: The client ID for the Looker API.
+    *   `LOOKER_CLIENT_SECRET`: The client secret for the Looker API.
+    *   `LOOKER_VERIFY_SSL`: Whether to verify SSL certificates.
+    *   `LOOKER_USE_CLIENT_OAUTH`: Whether to use OAuth for authentication.
+    *   `LOOKER_SHOW_HIDDEN_MODELS`: Whether to show hidden models.
+    *   `LOOKER_SHOW_HIDDEN_EXPLORES`: Whether to show hidden explores.
+    *   `LOOKER_SHOW_HIDDEN_FIELDS`: Whether to show hidden fields.
+*   **Permissions:**
+    *   A Looker account with permissions to access the desired projects
+        and LookML is required.
+*   **Tools:**
     *   `health_pulse`: Test the health of a Looker instance.
     *   `health_analyze`: Analyze the LookML usage of a Looker instance.
     *   `health_vacuum`: Suggest LookML elements that can be removed.
