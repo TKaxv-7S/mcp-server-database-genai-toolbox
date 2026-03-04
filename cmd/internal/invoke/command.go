@@ -18,6 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"reflect"
 
 	"github.com/googleapis/genai-toolbox/cmd/internal"
 	"github.com/googleapis/genai-toolbox/internal/server"
@@ -59,6 +60,12 @@ func runInvoke(cmd *cobra.Command, args []string, opts *internal.ToolboxOptions)
 		return err
 	}
 
+	// Trim config to only include the requested tool and its source
+	toolName := args[0]
+	if err := trimConfig(opts, toolName); err != nil {
+		return err
+	}
+
 	// Initialize Resources
 	sourcesMap, authServicesMap, embeddingModelsMap, toolsMap, toolsetsMap, promptsMap, promptsetsMap, err := server.InitializeConfigs(ctx, opts.Cfg)
 	if err != nil {
@@ -70,7 +77,6 @@ func runInvoke(cmd *cobra.Command, args []string, opts *internal.ToolboxOptions)
 	resourceMgr := resources.NewResourceManager(sourcesMap, authServicesMap, embeddingModelsMap, toolsMap, toolsetsMap, promptsMap, promptsetsMap)
 
 	// Execute Tool
-	toolName := args[0]
 	tool, ok := resourceMgr.GetTool(toolName)
 	if !ok {
 		errMsg := fmt.Errorf("tool %q not found", toolName)
@@ -134,6 +140,44 @@ func runInvoke(cmd *cobra.Command, args []string, opts *internal.ToolboxOptions)
 		return errMsg
 	}
 	fmt.Fprintln(opts.IOStreams.Out, string(output))
+
+	return nil
+}
+
+func trimConfig(opts *internal.ToolboxOptions, toolName string) error {
+	toolCfg, ok := opts.Cfg.ToolConfigs[toolName]
+	if !ok {
+		return fmt.Errorf("tool %q not found in configuration", toolName)
+	}
+	// Keep only the specified tool
+	newToolConfigs := make(server.ToolConfigs)
+	newToolConfigs[toolName] = toolCfg
+	opts.Cfg.ToolConfigs = newToolConfigs
+
+	// Find and keep only the associated source
+	sourceName := ""
+	v := reflect.ValueOf(toolCfg)
+	if v.Kind() == reflect.Struct {
+		f := v.FieldByName("Source")
+		if f.IsValid() && f.Kind() == reflect.String {
+			sourceName = f.String()
+		}
+	}
+	if sourceName != "" {
+		sourceCfg, ok := opts.Cfg.SourceConfigs[sourceName]
+		if ok {
+			newSourceConfigs := make(server.SourceConfigs)
+			newSourceConfigs[sourceName] = sourceCfg
+			opts.Cfg.SourceConfigs = newSourceConfigs
+		} else {
+			opts.Cfg.SourceConfigs = make(server.SourceConfigs)
+		}
+	}
+
+	// Clear other configurations not needed for a single tool invocation
+	opts.Cfg.ToolsetConfigs = make(server.ToolsetConfigs)
+	opts.Cfg.PromptConfigs = make(server.PromptConfigs)
+	opts.Cfg.PromptsetConfigs = make(server.PromptsetConfigs)
 
 	return nil
 }
