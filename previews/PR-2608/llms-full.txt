@@ -112,7 +112,7 @@ To install Toolbox as a binary on Linux (AMD64):
 
 ```sh
 # see releases page for other versions
-export VERSION=0.28.1
+export VERSION=0.29.0
 curl -L -o toolbox https://storage.googleapis.com/genai-toolbox/v$VERSION/linux/amd64/toolbox
 chmod +x toolbox
 ```
@@ -123,7 +123,7 @@ To install Toolbox as a binary on macOS (Apple Silicon):
 
 ```sh
 # see releases page for other versions
-export VERSION=0.28.1
+export VERSION=0.29.0
 curl -L -o toolbox https://storage.googleapis.com/genai-toolbox/v$VERSION/darwin/arm64/toolbox
 chmod +x toolbox
 ```
@@ -134,7 +134,7 @@ To install Toolbox as a binary on macOS (Intel):
 
 ```sh
 # see releases page for other versions
-export VERSION=0.28.1
+export VERSION=0.29.0
 curl -L -o toolbox https://storage.googleapis.com/genai-toolbox/v$VERSION/darwin/amd64/toolbox
 chmod +x toolbox
 ```
@@ -145,7 +145,7 @@ To install Toolbox as a binary on Windows (Command Prompt):
 
 ```cmd
 :: see releases page for other versions
-set VERSION=0.28.1
+set VERSION=0.29.0
 curl -o toolbox.exe "https://storage.googleapis.com/genai-toolbox/v%VERSION%/windows/amd64/toolbox.exe"
 ```
 
@@ -155,7 +155,7 @@ To install Toolbox as a binary on Windows (PowerShell):
 
 ```powershell
 # see releases page for other versions
-$VERSION = "0.28.1"
+$VERSION = "0.29.0"
 curl.exe -o toolbox.exe "https://storage.googleapis.com/genai-toolbox/v$VERSION/windows/amd64/toolbox.exe"
 ```
 
@@ -167,7 +167,7 @@ You can also install Toolbox as a container:
 
 ```sh
 # see releases page for other versions
-export VERSION=0.28.1
+export VERSION=0.29.0
 docker pull us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:$VERSION
 ```
 
@@ -186,7 +186,7 @@ To install from source, ensure you have the latest version of
 [Go installed](https://go.dev/doc/install), and then run the following command:
 
 ```sh
-go install github.com/googleapis/genai-toolbox@v0.28.1
+go install github.com/googleapis/genai-toolbox@v0.29.0
 ```
 
 {{% /tab %}}
@@ -1547,7 +1547,7 @@ In this section, we will download Toolbox, configure our tools in a
     <!-- {x-release-please-start-version} -->
     ```bash
     export OS="linux/amd64" # one of linux/amd64, darwin/arm64, darwin/amd64, or windows/amd64
-    curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/$OS/toolbox
+    curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/$OS/toolbox
     ```
     <!-- {x-release-please-end} -->
 
@@ -2225,19 +2225,19 @@ After you install Looker in the MCP Store, resources and tools from the server a
 
 {{< tabpane persist=header >}}
 {{< tab header="linux/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/linux/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/linux/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/arm64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/arm64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/arm64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="windows/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/windows/amd64/toolbox.exe
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/windows/amd64/toolbox.exe
 {{< /tab >}}
 {{< /tabpane >}}
     <!-- {x-release-please-end} -->
@@ -2577,19 +2577,19 @@ expose your developer assistant tools to a MySQL instance:
    <!-- {x-release-please-start-version} -->
    {{< tabpane persist=header >}}
 {{< tab header="linux/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/linux/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/linux/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/arm64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/arm64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/arm64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="windows/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/windows/amd64/toolbox.exe
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/windows/amd64/toolbox.exe
 {{< /tab >}}
 {{< /tabpane >}}
     <!-- {x-release-please-end} -->
@@ -2896,19 +2896,19 @@ expose your developer assistant tools to a Neo4j instance:
    <!-- {x-release-please-start-version} -->
    {{< tabpane persist=header >}}
 {{< tab header="linux/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/linux/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/linux/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/arm64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/arm64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/arm64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="windows/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/windows/amd64/toolbox.exe
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/windows/amd64/toolbox.exe
 {{< /tab >}}
 {{< /tabpane >}}
     <!-- {x-release-please-end} -->
@@ -3222,19 +3222,19 @@ Omni](https://cloud.google.com/alloydb/omni/docs/overview).
    <!-- {x-release-please-start-version} -->
    {{< tabpane persist=header >}}
 {{< tab header="linux/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/linux/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/linux/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/arm64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/arm64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/arm64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="windows/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/windows/amd64/toolbox.exe
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/windows/amd64/toolbox.exe
 {{< /tab >}}
 {{< /tabpane >}}
     <!-- {x-release-please-end} -->
@@ -3555,19 +3555,19 @@ instance:
    <!-- {x-release-please-start-version} -->
    {{< tabpane persist=header >}}
 {{< tab header="linux/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/linux/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/linux/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/arm64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/arm64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/arm64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="windows/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/windows/amd64/toolbox.exe
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/windows/amd64/toolbox.exe
 {{< /tab >}}
 {{< /tabpane >}}
     <!-- {x-release-please-end} -->
@@ -3874,19 +3874,19 @@ to expose your developer assistant tools to a SQLite instance:
    <!-- {x-release-please-start-version} -->
    {{< tabpane persist=header >}}
 {{< tab header="linux/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/linux/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/linux/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/arm64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/arm64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/arm64/toolbox
 {{< /tab >}}
 
 {{< tab header="darwin/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/darwin/amd64/toolbox
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/darwin/amd64/toolbox
 {{< /tab >}}
 
 {{< tab header="windows/amd64" lang="bash" >}}
-curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/windows/amd64/toolbox.exe
+curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/windows/amd64/toolbox.exe
 {{< /tab >}}
 {{< /tabpane >}}
     <!-- {x-release-please-end} -->
@@ -10453,6 +10453,10 @@ Apache Spark.
   Create a Serverless Spark PySpark batch operation.
 - [`serverless-spark-create-spark-batch`](../tools/serverless-spark/serverless-spark-create-spark-batch.md)
   Create a Serverless Spark Java batch operation.
+- [`serverless-spark-list-sessions`](../tools/serverless-spark/serverless-spark-list-sessions.md)
+  List and filter Serverless Spark sessions.
+- [`serverless-spark-get-session`](../tools/serverless-spark/serverless-spark-get-session.md)
+  Get a Serverless Spark session.
 
 ## Requirements
 
@@ -11586,6 +11590,59 @@ statement: |
 authRequired:
   - my-google-auth
   - other-auth-service
+```
+
+## Tool Annotations
+
+Tool annotations provide semantic metadata that helps MCP clients understand tool
+behavior. These hints enable clients to make better decisions about tool usage
+and provide appropriate user experiences.
+
+### Available Annotations
+
+| **annotation**     |  **type**   | **default** | **description**                                                        |
+|--------------------|:-----------:|:-----------:|------------------------------------------------------------------------|
+| readOnlyHint       |    bool     |    false    | Tool only reads data, no modifications to the environment.             |
+| destructiveHint    |    bool     |    true     | Tool may create, update, or delete data.                               |
+| idempotentHint     |    bool     |    false    | Repeated calls with same arguments have no additional effect.          |
+| openWorldHint      |    bool     |    true     | Tool interacts with external entities beyond its local environment.    |
+
+### Specifying Annotations
+
+Annotations can be specified in YAML tool configuration:
+
+```yaml
+tools:
+  my_query_tool:
+    kind: mongodb-find-one
+    source: my-mongodb
+    description: Find a single document
+    database: mydb
+    collection: users
+    annotations:
+      readOnlyHint: true
+      idempotentHint: true
+```
+
+### Default Annotations
+
+If not specified, tools use sensible defaults based on their operation type:
+
+- **Read operations** (find, aggregate, list): `readOnlyHint: true`
+- **Write operations** (insert, update, delete): `destructiveHint: true`, `readOnlyHint: false`
+
+### MCP Client Response
+
+Annotations appear in the `tools/list` MCP response:
+
+```json
+{
+  "name": "my_query_tool",
+  "description": "Find a single document",
+  "annotations": {
+    "readOnlyHint": true
+  }
+}
 ```
 
 ## Kinds of tools
@@ -13080,6 +13137,8 @@ Tools that work with Google Cloud Serverless for Apache Spark Sources.
 - [serverless-spark-cancel-batch](./serverless-spark-cancel-batch.md)
 - [serverless-spark-create-pyspark-batch](./serverless-spark-create-pyspark-batch.md)
 - [serverless-spark-create-spark-batch](./serverless-spark-create-spark-batch.md)
+- [serverless-spark-get-session](./serverless-spark-get-session.md)
+- [serverless-spark-list-sessions](./serverless-spark-list-sessions.md)
 
 
 # SingleStore
@@ -13407,7 +13466,7 @@ In this section, we will download and install the Toolbox binary.
     <!-- {x-release-please-start-version} -->
     ```bash
     export OS="linux/amd64" # one of linux/amd64, darwin/arm64, darwin/amd64, or windows/amd64
-    export VERSION="0.28.1"
+    export VERSION="0.29.0"
     curl -O https://storage.googleapis.com/genai-toolbox/v$VERSION/$OS/toolbox
     ```
     <!-- {x-release-please-end} -->
@@ -13841,7 +13900,7 @@ to use BigQuery, and then run the Toolbox server.
     <!-- {x-release-please-start-version} -->
     ```bash
     export OS="linux/amd64" # one of linux/amd64, darwin/arm64, darwin/amd64, or windows/amd64
-    curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/$OS/toolbox
+    curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/$OS/toolbox
     ```
     <!-- {x-release-please-end} -->
 
@@ -14488,7 +14547,7 @@ In this section, we will download Toolbox, configure our tools in a
     <!-- {x-release-please-start-version} -->
     ```bash
     export OS="linux/amd64" # one of linux/amd64, darwin/arm64, darwin/amd64, or windows/amd64
-    curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/$OS/toolbox
+    curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/$OS/toolbox
     ```
     <!-- {x-release-please-end} -->
 
@@ -14693,7 +14752,7 @@ In this section, we will download Toolbox and run the Toolbox server.
     <!-- {x-release-please-start-version} -->
     ```bash
     export OS="linux/amd64" # one of linux/amd64, darwin/arm64, darwin/amd64, or windows/amd64
-    curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/$OS/toolbox
+    curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/$OS/toolbox
     ```
     <!-- {x-release-please-end} -->
 
@@ -14818,7 +14877,7 @@ In this section, we will download Toolbox and run the Toolbox server.
     <!-- {x-release-please-start-version} -->
     ```bash
     export OS="linux/amd64" # one of linux/amd64, darwin/arm64, darwin/amd64, or windows/amd64
-    curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/$OS/toolbox
+    curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/$OS/toolbox
     ```
     <!-- {x-release-please-end} -->
 
@@ -14928,7 +14987,7 @@ In this section, we will download Toolbox and run the Toolbox server.
     <!-- {x-release-please-start-version} -->
     ```bash
     export OS="linux/amd64" # one of linux/amd64, darwin/arm64, darwin/amd64, or windows/amd64
-    curl -O https://storage.googleapis.com/genai-toolbox/v0.28.1/$OS/toolbox
+    curl -O https://storage.googleapis.com/genai-toolbox/v0.29.0/$OS/toolbox
     ```
     <!-- {x-release-please-end} -->
 
@@ -21166,6 +21225,8 @@ See [Usage Examples](../reference/cli.md#examples).
     *   `cancel_batch`: Cancels a Spark batch.
     *   `create_pyspark_batch`: Creates a PySpark batch.
     *   `create_spark_batch`: Creates a Spark batch.
+    *   `list_sessions`: Lists Spark sessions.
+    *   `get_session`: Gets a Spark session.
 
 ## SingleStore
 
