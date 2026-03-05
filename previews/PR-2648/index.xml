@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Documentation on MCP Toolbox for Databases</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2648/</link><description>Recent content in Documentation on MCP Toolbox for Databases</description><generator>Hugo</generator><language>en</language><atom:link href="https://googleapis.github.io/genai-toolbox/previews/PR-2648/index.xml" rel="self" type="application/rss+xml"/><item><title>ADK</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2648/user-guide/connect-to/client-sdks/javascript-sdk/adk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2648/user-guide/connect-to/client-sdks/javascript-sdk/adk/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MCP Toolbox for Databases</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2648/</link><description>Recent content on MCP Toolbox for Databases</description><generator>Hugo</generator><language>en</language><atom:link href="https://googleapis.github.io/genai-toolbox/previews/PR-2648/index.xml" rel="self" type="application/rss+xml"/><item><title>ADK</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2648/user-guide/connect-to/client-sdks/javascript-sdk/adk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2648/user-guide/connect-to/client-sdks/javascript-sdk/adk/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>The &lt;code>@toolbox-sdk/adk&lt;/code> package provides a Javascript interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
 &lt;h2 id="supported-environments">Supported Environments&lt;/h2>
 &lt;p>This SDK is a standard Node.js package built with TypeScript, ensuring broad compatibility with the modern JavaScript ecosystem.&lt;/p>
@@ -7582,7 +7582,7 @@ match the filter, you can use &lt;code>sort&lt;/code> options to control which d
 returned. Otherwise, the selection is not guaranteed.&lt;/p>
 &lt;p>The tool returns a single JSON object representing the document, wrapped in a
 JSON array.&lt;/p>
-&lt;h2 id="hahahugoshortcode167s0hbhb">
+&lt;h2 id="hahahugoshortcode165s0hbhb">
 
 
 
