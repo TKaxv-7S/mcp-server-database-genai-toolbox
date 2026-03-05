@@ -1715,7 +1715,7 @@ func TestPrebuiltTools(t *testing.T) {
 				},
 				"lifecycle": tools.ToolsetConfig{
 					Name:      "lifecycle",
-					ToolNames: []string{"create_backup", "restore_backup", "postgres_upgrade_precheck", "list_instance", "clone_instance", "wait_for_operation"},
+					ToolNames: []string{"create_backup", "restore_backup", "postgres_upgrade_precheck", "list_instances", "clone_instance", "wait_for_operation"},
 				},
 			},
 		},
