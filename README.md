@@ -26,27 +26,27 @@ documentation](https://googleapis.github.io/genai-toolbox/).
 > added MCP compatibility.
 
 <!-- TOC ignore:true -->
-## Table of Contents
+## Table of Contents <!-- omit in toc -->
 
 <!-- TOC -->
 
-- [Why Toolbox?](#why-toolbox)
-- [General Architecture](#general-architecture)
-- [Getting Started](#getting-started)
-  - [Installing the server](#installing-the-server)
-  - [Running the server](#running-the-server)
-  - [Integrating your application](#integrating-your-application)
-  - [Using Toolbox with Gemini CLI Extensions](#using-toolbox-with-gemini-cli-extensions)
-- [Configuration](#configuration)
-  - [Sources](#sources)
-  - [Tools](#tools)
-  - [Toolsets](#toolsets)
-  - [Prompts](#prompts)
-- [Versioning](#versioning)
-  - [Pre-1.0.0 Versioning](#pre-100-versioning)
-  - [Post-1.0.0 Versioning](#post-100-versioning)
-- [Contributing](#contributing)
-- [Community](#community)
+- [MCP Toolbox for Databases](#mcp-toolbox-for-databases)
+  - [Why Toolbox?](#why-toolbox)
+  - [General Architecture](#general-architecture)
+  - [Getting Started](#getting-started)
+    - [Quickstart: Running Toolbox using NPX](#quickstart-running-toolbox-using-npx)
+    - [Installing the server](#installing-the-server)
+    - [Running the server](#running-the-server)
+    - [Integrating your application](#integrating-your-application)
+    - [Using Toolbox with Gemini CLI Extensions](#using-toolbox-with-gemini-cli-extensions)
+  - [Configuration](#configuration)
+    - [Sources](#sources)
+    - [Tools](#tools)
+    - [Toolsets](#toolsets)
+    - [Prompts](#prompts)
+  - [Versioning](#versioning)
+  - [Contributing](#contributing)
+  - [Community](#community)
 
 <!-- /TOC -->
 
@@ -102,7 +102,7 @@ between agents and applications and update those tools without necessarily
 redeploying your application.
 
 <p align="center">
-<img src="./docs/en/getting-started/introduction/architecture.png" alt="architecture" width="50%"/>
+<img src="docs/en/user-guide/introduction/architecture.png" alt="architecture" width="50%"/>
 </p>
 
 ## Getting Started
@@ -1025,7 +1025,7 @@ This project uses [semantic versioning](https://semver.org/) (`MAJOR.MINOR.PATCH
 Since the project is in a pre-release stage (version `0.x.y`), we follow the
 standard conventions for initial  development:
 
-### Pre-1.0.0 Versioning
+### Pre-1.0.0 Versioning <!-- omit in toc -->
 
 While the major version is `0`, the public API should be considered unstable.
 The version will be incremented  as follows:
@@ -1035,7 +1035,7 @@ The version will be incremented  as follows:
 - **`0.MINOR.PATCH`**: The **PATCH** version is incremented for
   backward-compatible bug fixes.
 
-### Post-1.0.0 Versioning
+### Post-1.0.0 Versioning <!-- omit in toc -->
 
 Once the project reaches a stable `1.0.0` release, the version number
 **`MAJOR.MINOR.PATCH`** will follow the more common convention:
