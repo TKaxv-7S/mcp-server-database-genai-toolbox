@@ -49,11 +49,7 @@ asyncio.run(run_agent())
 ```
 
 {{< notice tip >}}
-<<<<<<< HEAD:docs/en/sdks/python-sdk/llamaindex/index.md
-For a complete, end-to-end example including setting up the service and using an SDK, see the full tutorial: [Toolbox Quickstart Tutorial](../../../getting-started/local_quickstart.md)
-=======
 For a complete, end-to-end example including setting up the service and using an SDK, see the full tutorial: [Toolbox Quickstart Tutorial](../../../../../build-with-mcp-toolbox/local_quickstart.md)
->>>>>>> ba5039398ed (docs: Add User Guide section (#2647)):docs/en/user-guide/connect-to/client-sdks/python-sdk/llamaindex/index.md
 {{< /notice >}}
 
 ## Usage
