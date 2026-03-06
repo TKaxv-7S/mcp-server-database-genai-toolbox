@@ -219,9 +219,11 @@ tools.
 
 * **Update the documentation** to include information about your new data source
   and tool. This includes:
-  * Adding a new page to the `docs/en/resources/sources` directory for your data
-    source.
-  * Adding a new page to the `docs/en/resources/tools` directory for your tool.
+  * Add a new folder for your integration in the `docs/en/integrations` directory.
+  * If you are adding a new source, add the details in the `_index.md` file in this new folder.
+    * Make sure to include the `{{< list-tools >}}` shortcode to dynamically display tools that work with this source.
+  * If you are adding a new tool, add the details in the `<tool_name>.md` file in this new folder.
+    * Make sure to include the `{{< compatible-sources >}}` shortcode to dynamically display data sources this tool supports.
 
 * **(Optional) Add samples** to the `docs/en/samples/<newdb>` directory.
 
