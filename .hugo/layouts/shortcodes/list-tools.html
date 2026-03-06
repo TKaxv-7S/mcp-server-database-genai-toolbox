@@ -1,0 +1,68 @@
+{{/* Capture the current page's title (e.g., "AlloyDB") */}}
+{{ $currentTitle := .Page.Title }}
+{{ $currentPages := .Page.RegularPages }}
+
+{{/* Display Current Directory Tools (if any exist) */}}
+{{ if $currentPages }}
+<h3>{{ $currentTitle }} Tools</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Tool Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ range $currentPages }}
+    <tr>
+      <td><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong></a></td>
+      <td>{{ .Description | default "No description provided." }}</td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>
+{{ end }}
+
+{{/* Display Inherited Tools from specified directories */}}
+{{ $dirsParam := .Get "dirs" }}
+
+{{ if $dirsParam }}
+  {{ range split $dirsParam "," }}
+    {{ $dirPath := trim . " " }}
+    {{ $toolDir := site.GetPage $dirPath }}
+
+    {{ if $toolDir }}
+      {{ $externalPages := $toolDir.RegularPages }}
+
+      {{ if $externalPages }}
+        {{/* Print the dynamic compatibility sentence */}}
+        <p><em><strong>{{ $currentTitle }}</strong> maintains full compatibility with <strong>{{ $toolDir.Title }}</strong>, allowing you to use the following tools with your <strong>{{ $currentTitle }}</strong> source:</em></p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Tool Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ range $externalPages }}
+            <tr>
+              <td><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong></a></td>
+              <td>{{ .Description | default "No description provided." }}</td>
+            </tr>
+            {{ end }}
+          </tbody>
+        </table>
+      {{ end }}
+
+    {{ else }}
+      <p style="color: red;"><em>Warning: Tool directory '{{ $dirPath }}' not found.</em></p>
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Fallback if absolutely no tools exist anywhere */}}
+{{ if and (not $currentPages) (not $dirsParam) }}
+  <p><em>No tools found to display.</em></p>
+{{ end }}
