@@ -27,6 +27,9 @@ permissions: read-all
 jobs:
   build-preview:
     runs-on: ubuntu-24.04
+    concurrency:
+      group: "docs-build-${{ github.event.pull_request.number }}"
+      cancel-in-progress: true
     defaults:
       run:
         working-directory: .hugo
