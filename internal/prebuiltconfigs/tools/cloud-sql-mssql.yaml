@@ -90,4 +90,5 @@ toolsets:
     - restore_backup
     - clone_instance
     - list_instances
+    - get_instance
     - wait_for_operation
