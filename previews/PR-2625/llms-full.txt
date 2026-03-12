@@ -3493,8 +3493,7 @@ The following tools are available to the LLM:
 {{< notice note >}}
 Prebuilt tools are pre-1.0, so expect some tool changes between versions. LLMs
 will adapt to the tools available, so this shouldn't affect most users.
-{{< /notice >}}
-
+{{< /notice >}} 
 
 # PostgreSQL using MCP
 Connect your IDE to PostgreSQL using Toolbox.
@@ -15537,11 +15536,6 @@ Starting MCP inspector...
 1. Select `List Tools`, you will see a list of tools configured in `tools.yaml`.
 
 1. Test out your tools here\!
-
-
-
-# OracleDB
-How to get started with Toolbox using Oracle Database.
 
 
 
