@@ -19799,7 +19799,7 @@ header, .td-navbar {
   width: 100% !important; }
   @media (max-width: 991.98px) {
     .td-navbar {
-      position: absolute !important;
+      position: relative !important;
       height: auto !important;
       padding-bottom: 0.5rem !important; } }
 /* Desktop Search Centering */
