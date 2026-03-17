@@ -1,5 +1,5 @@
 ---
-title: "serverless-spark-get-session-template"
+title: "serverless-spark-get-session-template Tool"
 type: docs
 weight: 1
 description: >
@@ -33,11 +33,11 @@ source: my-serverless-spark-source
 description: Use this tool to get details of a serverless spark session template.
 ```
 
-## Response Format
+## Output Format
 
 ```json
 {
-  "sessionTemplate": {  
+  "sessionTemplate": { 
     "name": "projects/my-project/locations/us-central1/sessionTemplates/my-session-template",
     "description": "Template for Spark Session",
     // ... complete session template resource definition
