@@ -9423,6 +9423,8 @@ Create a Serverless Spark Java batch operation.&lt;/li>
 List and filter Serverless Spark sessions.&lt;/li>
 &lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/serverless-spark/serverless-spark-get-session/">&lt;code>serverless-spark-get-session&lt;/code>&lt;/a>
 Get a Serverless Spark session.&lt;/li>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/serverless-spark/serverless-spark-get-session-template/">&lt;code>serverless-spark-get-session-template&lt;/code>&lt;/a>
+Get a Serverless Spark session template.&lt;/li>
 &lt;/ul>
 &lt;h2 id="requirements">Requirements&lt;/h2>
 &lt;h3 id="iam-permissions">IAM Permissions&lt;/h3>
@@ -9495,6 +9497,68 @@ following sources:&lt;/p>
  &lt;td style="text-align: center">string&lt;/td>
  &lt;td style="text-align: center">true&lt;/td>
  &lt;td>Must be &amp;ldquo;serverless-spark-get-session&amp;rdquo;.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>source&lt;/td>
+ &lt;td style="text-align: center">string&lt;/td>
+ &lt;td style="text-align: center">true&lt;/td>
+ &lt;td>Name of the source the tool should use.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>description&lt;/td>
+ &lt;td style="text-align: center">string&lt;/td>
+ &lt;td style="text-align: center">true&lt;/td>
+ &lt;td>Description of the tool that is passed to the LLM.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>authRequired&lt;/td>
+ &lt;td style="text-align: center">string[]&lt;/td>
+ &lt;td style="text-align: center">false&lt;/td>
+ &lt;td>List of auth services required to invoke this tool&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table></description></item><item><title>serverless-spark-get-session-template</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/serverless-spark/serverless-spark-get-session-template/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/serverless-spark/serverless-spark-get-session-template/</guid><description>&lt;h2 id="about">About&lt;/h2>
+&lt;p>A &lt;code>serverless-spark-get-session-template&lt;/code> tool retrieves a specific Spark session template from a
+Google Cloud Serverless for Apache Spark source. It&amp;rsquo;s compatible with the
+following sources:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/sources/serverless-spark/">serverless-spark&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>serverless-spark-get-session-template&lt;/code> accepts the following parameters:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>&lt;code>name&lt;/code>&lt;/strong> (required): The short name of the session template, e.g. for &lt;code>projects/my-project/locations/us-central1/sessionTemplates/my-session-template&lt;/code>, pass &lt;code>my-session-template&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;p>The tool gets the &lt;code>project&lt;/code> and &lt;code>location&lt;/code> from the source configuration.&lt;/p>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">tools&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">get_spark_session_template&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">type&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">serverless-spark-get-session-template&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">source&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">my-serverless-spark-source&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Use this tool to get details of a serverless spark session template.&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="response-format">Response Format&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;sessionTemplate&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;projects/my-project/locations/us-central1/sessionTemplates/my-session-template&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;description&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Template for Spark Session&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// ... complete session template resource definition
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>&lt;strong>field&lt;/strong>&lt;/th>
+ &lt;th style="text-align: center">&lt;strong>type&lt;/strong>&lt;/th>
+ &lt;th style="text-align: center">&lt;strong>required&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>description&lt;/strong>&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>type&lt;/td>
+ &lt;td style="text-align: center">string&lt;/td>
+ &lt;td style="text-align: center">true&lt;/td>
+ &lt;td>Must be &amp;ldquo;serverless-spark-get-session-template&amp;rdquo;.&lt;/td>
  &lt;/tr>
  &lt;tr>
  &lt;td>source&lt;/td>
@@ -10712,7 +10776,26 @@ with database and analytics services and popular open-source databases.&lt;/p>
 &lt;p>Gemini CLI is highly extensible, allowing for the addition of new tools and
 capabilities through extensions. You can load the extensions from a GitHub URL,
 a local directory, or a configurable registry. They provide new tools, slash
-commands, and prompts to assist with your workflow.&lt;/p></description></item><item><title>Core</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/sdks/js/core/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/sdks/js/core/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+commands, and prompts to assist with your workflow.&lt;/p></description></item><item><title>Core</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/sdks/java/core/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/sdks/java/core/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>The package provides a java interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
+&lt;h2 id="installation">Installation&lt;/h2>
+&lt;p>This SDK is distributed via a &lt;a href="https://mvnrepository.com/artifact/com.google.cloud.mcp/mcp-toolbox-sdk-java">Maven Central Repository&lt;/a>.&lt;/p>
+&lt;h3 id="maven">Maven&lt;/h3>
+&lt;p>Add the dependency to your &lt;code>pom.xml&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;groupId&amp;gt;&lt;/span>com.google.cloud.mcp&lt;span class="nt">&amp;lt;/groupId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;artifactId&amp;gt;&lt;/span>mcp-toolbox-sdk-java&lt;span class="nt">&amp;lt;/artifactId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c">&amp;lt;!-- Replace &amp;#39;VERSION&amp;#39; with the latest version from https://mvnrepository.com/artifact/com.google.cloud.mcp/mcp-toolbox-sdk-java --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;version&amp;gt;&lt;/span>VERSION&lt;span class="nt">&amp;lt;/version&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;scope&amp;gt;&lt;/span>compile&lt;span class="nt">&amp;lt;/scope&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="gradle">Gradle&lt;/h3>
+&lt;pre tabindex="0">&lt;code>dependencies {
+ // Replace &amp;#39;VERSION&amp;#39; with the latest version from https://mvnrepository.com/artifact/com.google.cloud.mcp/mcp-toolbox-sdk-java
+ implementation(&amp;#34;com.google.cloud.mcp:mcp-toolbox-sdk-java:VERSION&amp;#34;) 
+}
+&lt;/code>&lt;/pre>&lt;h2 id="quickstart">Quickstart&lt;/h2>
+&lt;p>Here is the minimal code needed to connect to a mcp toolbox and invoke a tool.&lt;/p></description></item><item><title>Core</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/sdks/js/core/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/sdks/js/core/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>The &lt;code>@toolbox-sdk/core&lt;/code> package provides a Javascript interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
 &lt;h2 id="supported-environments">Supported Environments&lt;/h2>
 &lt;p>This SDK is a standard Node.js package built with TypeScript, ensuring broad compatibility with the modern JavaScript ecosystem.&lt;/p>
@@ -11305,27 +11388,7 @@ on how to &lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-267
 your Looker instance. Refer to the documentation
 &lt;a href="https://cloud.google.com/looker/docs/api-auth#authentication_with_an_sdk">here&lt;/a>.
 You may need to ask an administrator to get the Client ID and Client Secret
-for you.&lt;/p></description></item><item><title>SDK</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/sdks/java/core/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/sdks/java/core/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>The package provides a java interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
-&lt;h2 id="installation">Installation&lt;/h2>
-&lt;p>This SDK is distributed via a Maven Central Repository.&lt;/p>
-&lt;h3 id="maven">Maven&lt;/h3>
-&lt;p>Add the dependency to your &lt;code>pom.xml&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="c">&amp;lt;!-- Source: https://mvnrepository.com/artifact/com.google.cloud.mcp/mcp-toolbox-sdk-java --&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;dependency&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;groupId&amp;gt;&lt;/span>com.google.cloud.mcp&lt;span class="nt">&amp;lt;/groupId&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;artifactId&amp;gt;&lt;/span>mcp-toolbox-sdk-java&lt;span class="nt">&amp;lt;/artifactId&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;version&amp;gt;&lt;/span>0.2.0&lt;span class="nt">&amp;lt;/version&amp;gt;&lt;/span> &lt;span class="c">&amp;lt;!-- {x-version-update:mcp-toolbox-sdk-java:current} --&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;scope&amp;gt;&lt;/span>compile&lt;span class="nt">&amp;lt;/scope&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/dependency&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="gradle">Gradle&lt;/h3>
-&lt;pre tabindex="0">&lt;code>dependencies {
- // Source: https://mvnrepository.com/artifact/com.google.cloud.mcp/mcp-toolbox-sdk-java
- implementation(&amp;#34;com.google.cloud.mcp:mcp-toolbox-sdk-java:0.2.0&amp;#34;) 
-}
-&lt;/code>&lt;/pre>&lt;h2 id="usage">Usage&lt;/h2>
-&lt;h3 id="load-the-client">Load the Client&lt;/h3>
-&lt;p>The &lt;code>McpToolboxClient&lt;/code> is your entry point. It is thread-safe and designed to be instantiated once and reused.&lt;/p></description></item><item><title>serverless-spark-cancel-batch</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/serverless-spark/serverless-spark-cancel-batch/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/serverless-spark/serverless-spark-cancel-batch/</guid><description>&lt;h2 id="about">About&lt;/h2>
+for you.&lt;/p></description></item><item><title>serverless-spark-cancel-batch</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/serverless-spark/serverless-spark-cancel-batch/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/serverless-spark/serverless-spark-cancel-batch/</guid><description>&lt;h2 id="about">About&lt;/h2>
 &lt;p>&lt;code>serverless-spark-cancel-batch&lt;/code> tool cancels a running Spark batch operation in
 a Google Cloud Serverless for Apache Spark source. The cancellation request is
 asynchronous, so the batch state will not change immediately after the tool
@@ -12129,7 +12192,16 @@ columns, constraints, and indexes. It&amp;rsquo;s compatible with:&lt;/p>
 &lt;p>This tool is read-only and executes pre-defined SQL queries against the
 &lt;code>INFORMATION_SCHEMA&lt;/code> tables to gather metadata. The tool automatically detects
 the database dialect from the source configuration and uses the appropriate SQL
-syntax.&lt;/p></description></item><item><title>clickhouse-list-tables</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/clickhouse/clickhouse-list-tables/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/clickhouse/clickhouse-list-tables/</guid><description>&lt;h2 id="about">About&lt;/h2>
+syntax.&lt;/p></description></item><item><title>Style Guide</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/concepts/style-guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/concepts/style-guide/</guid><description>&lt;p>This document provides style guidelines and best practices for developers building MCP tools using &lt;strong>MCP Toolbox&lt;/strong>. Following these standards ensures that agents can reason effectively, security is maintained, and user intent is met with high precision.&lt;/p>
+&lt;h2 id="combatting-context-rot-and-tool-limits">Combatting &amp;ldquo;Context Rot&amp;rdquo; and Tool Limits&lt;/h2>
+&lt;p>Excessive or irrelevant tool definitions lead to &lt;strong>&amp;ldquo;Context Rot&amp;rdquo;&lt;/strong>, where the model&amp;rsquo;s attention is diluted by &amp;ldquo;distractor&amp;rdquo; tokens, causing reasoning accuracy to collapse.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Toolsets:&lt;/strong> Use the MCP Toolbox &lt;strong>toolsets&lt;/strong> feature to group tools by capability or persona (e.g., &lt;code>cloud-sql-admin&lt;/code> vs. &lt;code>cloud-sql-data&lt;/code>). This ensures the agent only sees tools relevant to its immediate intent.&lt;/li>
+&lt;li>&lt;strong>Target Limits:&lt;/strong> Aim for &lt;strong>5–8 tools per toolset&lt;/strong> (organized by Critical User Journey). While the platform supports more, performance and accuracy are highest when the agent is exposed to a cognitively manageable list of actions. The current rule of thumb is to try to keep it to 40 tools per server as an upper limit, though even this amount may cause performance issues. Performance degrades as more tools are added, so teams should heavily weigh adding new tools against the negative impact on tool accuracy until other mechanisms are in place to deal with this.&lt;/li>
+&lt;/ul>
+&lt;h2 id="naming-conventions">Naming Conventions&lt;/h2>
+&lt;h3 id="tool-names">Tool Names&lt;/h3>
+&lt;p>Use &lt;code>snake_case&lt;/code> with the pattern &lt;code>&amp;lt;action&amp;gt;_&amp;lt;resource&amp;gt;&lt;/code>. Avoid product-specific prefixes, as agents can disambiguate tools by the MCP server name.&lt;/p></description></item><item><title>clickhouse-list-tables</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/clickhouse/clickhouse-list-tables/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/tools/clickhouse/clickhouse-list-tables/</guid><description>&lt;h2 id="about">About&lt;/h2>
 &lt;p>A &lt;code>clickhouse-list-tables&lt;/code> tool lists all available tables in a specified
 ClickHouse database. It&amp;rsquo;s compatible with the
 &lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2675/resources/sources/clickhouse/">clickhouse&lt;/a> source.&lt;/p>
@@ -12248,7 +12320,7 @@ section.&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;5000:5000&amp;#34;&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./config:/config&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">command&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;toolbox&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--tools-file&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;/config/tools.yaml&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--address&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">command&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--tools-file&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;/config/tools.yaml&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--address&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">depends_on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">db&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">condition&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">service_healthy&lt;/span>&lt;span class="w">
@@ -12278,7 +12350,7 @@ section.&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">tool-network&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">tool-network&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre>&lt;code>&lt;style type="text/css">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;style type="text/css">
  
  .notice {
  --title-color: #fff;
