@@ -522,6 +522,8 @@ type ParameterManifest struct {
 	AuthServices         []string           `json:"authSources"`
 	Items                *ParameterManifest `json:"items,omitempty"`
 	Default              any                `json:"default,omitempty"`
+	Minimum              any                `json:"minimum,omitempty"`
+	Maximum              any                `json:"maximum,omitempty"`
 	AdditionalProperties any                `json:"additionalProperties,omitempty"`
 	EmbeddedBy           string             `json:"embeddedBy,omitempty"`
 	ValueFromParam       string             `json:"valueFromParam,omitempty"`
@@ -531,6 +533,8 @@ type ParameterManifest struct {
 type ParameterMcpManifest struct {
 	Type                 string                `json:"type"`
 	Description          string                `json:"description"`
+	Minimum              any                   `json:"minimum,omitempty"`
+	Maximum              any                   `json:"maximum,omitempty"`
 	Items                *ParameterMcpManifest `json:"items,omitempty"`
 	Default              any                   `json:"default,omitempty"`
 	AdditionalProperties any                   `json:"additionalProperties,omitempty"`
@@ -977,7 +981,26 @@ func (p *IntParameter) Manifest() ParameterManifest {
 		Description:  p.Desc,
 		AuthServices: authServiceNames,
 		Default:      p.GetDefault(),
+		Minimum:      p.MinValue,
+		Maximum:      p.MaxValue,
 	}
+}
+
+func (p *IntParameter) McpManifest() (ParameterMcpManifest, []string) {
+	authServiceNames := getAuthServiceNames(p.AuthServices)
+	var minVal, maxVal any
+	if p.MinValue != nil {
+		minVal = *p.MinValue
+	}
+	if p.MaxValue != nil {
+		maxVal = *p.MaxValue
+	}
+	return ParameterMcpManifest{
+		Type:        p.Type,
+		Description: p.Desc,
+		Minimum:     minVal,
+		Maximum:     maxVal,
+	}, authServiceNames
 }
 
 // NewFloatParameter is a convenience function for initializing a FloatParameter.
@@ -1134,6 +1157,8 @@ func (p *FloatParameter) Manifest() ParameterManifest {
 		Description:  p.Desc,
 		AuthServices: authServiceNames,
 		Default:      p.GetDefault(),
+		Minimum:      p.MinValue,
+		Maximum:      p.MaxValue,
 	}
 }
 
@@ -1141,9 +1166,18 @@ func (p *FloatParameter) Manifest() ParameterManifest {
 // json schema only allow numeric types of 'integer' and 'number'.
 func (p *FloatParameter) McpManifest() (ParameterMcpManifest, []string) {
 	authServiceNames := getAuthServiceNames(p.AuthServices)
+	var minVal, maxVal any
+	if p.MinValue != nil {
+		minVal = *p.MinValue
+	}
+	if p.MaxValue != nil {
+		maxVal = *p.MaxValue
+	}
 	return ParameterMcpManifest{
 		Type:        "number",
 		Description: p.Desc,
+		Minimum:     minVal,
+		Maximum:     maxVal,
 	}, authServiceNames
 }
 
