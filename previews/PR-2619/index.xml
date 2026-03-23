@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Documentation on MCP Toolbox for Databases</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/</link><description>Recent content in Documentation on MCP Toolbox for Databases</description><generator>Hugo</generator><language>en</language><atom:link href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/index.xml" rel="self" type="application/rss+xml"/><item><title>ADK</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/js-sdk/adk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/js-sdk/adk/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Documentation on MCP Toolbox for Databases</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/</link><description>Recent content in Documentation on MCP Toolbox for Databases</description><generator>Hugo</generator><language>en</language><atom:link href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/index.xml" rel="self" type="application/rss+xml"/><item><title>ADK</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/js/adk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/js/adk/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>The &lt;code>@toolbox-sdk/adk&lt;/code> package provides a Javascript interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
 &lt;h2 id="supported-environments">Supported Environments&lt;/h2>
 &lt;p>This SDK is a standard Node.js package built with TypeScript, ensuring broad compatibility with the modern JavaScript ecosystem.&lt;/p>
@@ -12,7 +12,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="quickstart">Quickstart&lt;/h2>
 &lt;ol>
 &lt;li>
-&lt;p>&lt;strong>Start the Toolbox Service&lt;/strong>&lt;/p></description></item><item><title>ADK</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python-sdk/adk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python-sdk/adk/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>&lt;strong>Start the Toolbox Service&lt;/strong>&lt;/p></description></item><item><title>ADK</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python/adk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python/adk/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>The &lt;code>toolbox-adk&lt;/code> package provides a Python interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
 &lt;h2 id="installation">Installation&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">pip install google-adk&lt;span class="o">[&lt;/span>toolbox&lt;span class="o">]&lt;/span>
@@ -3700,6 +3700,9 @@ It&amp;rsquo;s compatible with the following sources:&lt;/p>
 entries are filtered and returned to the user. It also optionally accepts
 following parameters:&lt;/p>
 &lt;ul>
+&lt;li>&lt;code>scope&lt;/code> - A scope limits the search space to a particular project or organization.
+It must be in the format: organizations/&amp;lt;org_id&amp;gt; or projects/&amp;lt;project_id&amp;gt;
+or projects/&amp;lt;project_number&amp;gt;.&lt;/li>
 &lt;li>&lt;code>pageSize&lt;/code> - Number of results in the search page. Defaults to &lt;code>5&lt;/code>.&lt;/li>
 &lt;li>&lt;code>orderBy&lt;/code> - Specifies the ordering of results. Supported values are: relevance
 (default), last_modified_timestamp, last_modified_timestamp asc.&lt;/li>
@@ -4896,7 +4899,18 @@ Make HTTP requests to REST APIs or other web services.&lt;/li>
  &lt;path d="M551.281 252.36c0-3.32-1.172-6.641-3.515-8.985l-17.774-17.578c-2.344-2.344-5.469-3.711-8.789-3.711-3.32 0-6.445 1.367-8.789 3.71l-79.687 79.493-44.141-44.14c-2.344-2.344-5.469-3.712-8.79-3.712-3.32 0-6.444 1.368-8.788 3.711l-17.774 17.579c-2.343 2.343-3.515 5.664-3.515 8.984 0 3.32 1.172 6.445 3.515 8.789l70.704 70.703c2.343 2.344 5.664 3.711 8.789 3.711 3.32 0 6.64-1.367 8.984-3.71l106.055-106.056c2.343-2.343 3.515-5.468 3.515-8.789ZM600.5 284c0 82.813-67.188 150-150 150-82.813 0-150-67.188-150-150 0-82.813 67.188-150 150-150 82.813 0 150 67.188 150 150Z"/>
 &lt;/svg>
 
- &lt;/span>Tip&lt;/p></description></item><item><title>Looker</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/sources/looker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/sources/looker/</guid><description>&lt;h2 id="about">About&lt;/h2>
+ &lt;/span>Tip&lt;/p></description></item><item><title>list_tables</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/oracle/oracle-list-tables/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/oracle/oracle-list-tables/</guid><description>&lt;h2 id="about">About&lt;/h2>
+&lt;p>An &lt;code>oracle-sql&lt;/code> tool executes a pre-defined SQL statement against an
+Oracle database. It&amp;rsquo;s compatible with the following source:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/sources/oracle/">oracle&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>The specified SQL statement is executed using &lt;a href="https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html">prepared statements&lt;/a>
+for security and performance. It expects parameter placeholders in the SQL query
+to be in the native Oracle format (e.g., &lt;code>:1&lt;/code>, &lt;code>:2&lt;/code>).&lt;/p>
+&lt;p>By default, tools are configured as &lt;strong>read-only&lt;/strong> (SAFE mode). To execute data modification
+statements (INSERT, UPDATE, DELETE), you must explicitly set the &lt;code>readOnly&lt;/code>
+field to &lt;code>false&lt;/code>.&lt;/p></description></item><item><title>Looker</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/sources/looker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/sources/looker/</guid><description>&lt;h2 id="about">About&lt;/h2>
 &lt;p>&lt;a href="https://cloud.google.com/looker/docs">Looker&lt;/a> is a web based business intelligence and data management
 tool that provides a semantic layer to facilitate querying. It can be deployed
 in the cloud, on GCP, or on premises.&lt;/p>
@@ -6526,7 +6540,22 @@ in a given model in the source.&lt;/p>
  &lt;td>Description of the tool that is passed to the LLM.&lt;/td>
  &lt;/tr>
  &lt;/tbody>
-&lt;/table></description></item><item><title>looker-health-analyze</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/looker/looker-health-analyze/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/looker/looker-health-analyze/</guid><description>&lt;h2 id="about">About&lt;/h2>
+&lt;/table></description></item><item><title>looker-git-branch</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/looker/looker-git-branch/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/looker/looker-git-branch/</guid><description>&lt;h2 id="about">About&lt;/h2>
+&lt;p>A &lt;code>looker-git-branch&lt;/code> tool is used to retrieve and manipulate the git branch
+of a LookML project.&lt;/p>
+&lt;p>It&amp;rsquo;s compatible with the following sources:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/sources/looker/">looker&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>looker-git-branch&lt;/code> requires two parameters, the LookML &lt;code>project_id&lt;/code> and the
+&lt;code>operation&lt;/code>. The operation must be one of &lt;code>list&lt;/code>, &lt;code>get&lt;/code>, &lt;code>create&lt;/code>, &lt;code>switch&lt;/code>,
+or &lt;code>delete&lt;/code>.&lt;/p>
+&lt;p>The &lt;code>list&lt;/code> operation retrieves the list of available branches. The &lt;code>get&lt;/code>
+operation retrieves the current branch.&lt;/p>
+&lt;p>&lt;code>create&lt;/code>, &lt;code>switch&lt;/code> and &lt;code>delete&lt;/code> all require an additional parameter, the
+&lt;code>branch&lt;/code> name. The &lt;code>create&lt;/code> operation creates a new branch. The &lt;code>switch&lt;/code>
+operation switches to the specified branch. The &lt;code>delete&lt;/code> operation deletes
+the specified branch.&lt;/p></description></item><item><title>looker-health-analyze</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/looker/looker-health-analyze/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/looker/looker-health-analyze/</guid><description>&lt;h2 id="about">About&lt;/h2>
 &lt;p>The &lt;code>looker-health-analyze&lt;/code> tool performs various analysis tasks on a Looker
 instance. The &lt;code>action&lt;/code> parameter selects the type of analysis to perform:&lt;/p>
 &lt;ul>
@@ -9423,6 +9452,8 @@ Create a Serverless Spark Java batch operation.&lt;/li>
 List and filter Serverless Spark sessions.&lt;/li>
 &lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/serverless-spark/serverless-spark-get-session/">&lt;code>serverless-spark-get-session&lt;/code>&lt;/a>
 Get a Serverless Spark session.&lt;/li>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/serverless-spark/serverless-spark-get-session-template/">&lt;code>serverless-spark-get-session-template&lt;/code>&lt;/a>
+Get a Serverless Spark session template.&lt;/li>
 &lt;/ul>
 &lt;h2 id="requirements">Requirements&lt;/h2>
 &lt;h3 id="iam-permissions">IAM Permissions&lt;/h3>
@@ -9495,6 +9526,68 @@ following sources:&lt;/p>
  &lt;td style="text-align: center">string&lt;/td>
  &lt;td style="text-align: center">true&lt;/td>
  &lt;td>Must be &amp;ldquo;serverless-spark-get-session&amp;rdquo;.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>source&lt;/td>
+ &lt;td style="text-align: center">string&lt;/td>
+ &lt;td style="text-align: center">true&lt;/td>
+ &lt;td>Name of the source the tool should use.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>description&lt;/td>
+ &lt;td style="text-align: center">string&lt;/td>
+ &lt;td style="text-align: center">true&lt;/td>
+ &lt;td>Description of the tool that is passed to the LLM.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>authRequired&lt;/td>
+ &lt;td style="text-align: center">string[]&lt;/td>
+ &lt;td style="text-align: center">false&lt;/td>
+ &lt;td>List of auth services required to invoke this tool&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table></description></item><item><title>serverless-spark-get-session-template</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/serverless-spark/serverless-spark-get-session-template/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/serverless-spark/serverless-spark-get-session-template/</guid><description>&lt;h2 id="about">About&lt;/h2>
+&lt;p>A &lt;code>serverless-spark-get-session-template&lt;/code> tool retrieves a specific Spark session template from a
+Google Cloud Serverless for Apache Spark source. It&amp;rsquo;s compatible with the
+following sources:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/sources/serverless-spark/">serverless-spark&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>serverless-spark-get-session-template&lt;/code> accepts the following parameters:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>&lt;code>name&lt;/code>&lt;/strong> (required): The short name of the session template, e.g. for &lt;code>projects/my-project/locations/us-central1/sessionTemplates/my-session-template&lt;/code>, pass &lt;code>my-session-template&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;p>The tool gets the &lt;code>project&lt;/code> and &lt;code>location&lt;/code> from the source configuration.&lt;/p>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">tools&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">get_spark_session_template&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">type&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">serverless-spark-get-session-template&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">source&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">my-serverless-spark-source&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Use this tool to get details of a serverless spark session template.&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="response-format">Response Format&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;sessionTemplate&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;projects/my-project/locations/us-central1/sessionTemplates/my-session-template&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;description&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Template for Spark Session&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// ... complete session template resource definition
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>&lt;strong>field&lt;/strong>&lt;/th>
+ &lt;th style="text-align: center">&lt;strong>type&lt;/strong>&lt;/th>
+ &lt;th style="text-align: center">&lt;strong>required&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>description&lt;/strong>&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>type&lt;/td>
+ &lt;td style="text-align: center">string&lt;/td>
+ &lt;td style="text-align: center">true&lt;/td>
+ &lt;td>Must be &amp;ldquo;serverless-spark-get-session-template&amp;rdquo;.&lt;/td>
  &lt;/tr>
  &lt;tr>
  &lt;td>source&lt;/td>
@@ -10712,7 +10805,26 @@ with database and analytics services and popular open-source databases.&lt;/p>
 &lt;p>Gemini CLI is highly extensible, allowing for the addition of new tools and
 capabilities through extensions. You can load the extensions from a GitHub URL,
 a local directory, or a configurable registry. They provide new tools, slash
-commands, and prompts to assist with your workflow.&lt;/p></description></item><item><title>Core</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/js-sdk/core/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/js-sdk/core/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+commands, and prompts to assist with your workflow.&lt;/p></description></item><item><title>Core</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/java/core/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/java/core/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>The package provides a java interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
+&lt;h2 id="installation">Installation&lt;/h2>
+&lt;p>This SDK is distributed via a &lt;a href="https://mvnrepository.com/artifact/com.google.cloud.mcp/mcp-toolbox-sdk-java">Maven Central Repository&lt;/a>.&lt;/p>
+&lt;h3 id="maven">Maven&lt;/h3>
+&lt;p>Add the dependency to your &lt;code>pom.xml&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;groupId&amp;gt;&lt;/span>com.google.cloud.mcp&lt;span class="nt">&amp;lt;/groupId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;artifactId&amp;gt;&lt;/span>mcp-toolbox-sdk-java&lt;span class="nt">&amp;lt;/artifactId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c">&amp;lt;!-- Replace &amp;#39;VERSION&amp;#39; with the latest version from https://mvnrepository.com/artifact/com.google.cloud.mcp/mcp-toolbox-sdk-java --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;version&amp;gt;&lt;/span>VERSION&lt;span class="nt">&amp;lt;/version&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;scope&amp;gt;&lt;/span>compile&lt;span class="nt">&amp;lt;/scope&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="gradle">Gradle&lt;/h3>
+&lt;pre tabindex="0">&lt;code>dependencies {
+ // Replace &amp;#39;VERSION&amp;#39; with the latest version from https://mvnrepository.com/artifact/com.google.cloud.mcp/mcp-toolbox-sdk-java
+ implementation(&amp;#34;com.google.cloud.mcp:mcp-toolbox-sdk-java:VERSION&amp;#34;) 
+}
+&lt;/code>&lt;/pre>&lt;h2 id="quickstart">Quickstart&lt;/h2>
+&lt;p>Here is the minimal code needed to connect to a MCP Toolbox and invoke a tool.&lt;/p></description></item><item><title>Core</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/js/core/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/js/core/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>The &lt;code>@toolbox-sdk/core&lt;/code> package provides a Javascript interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
 &lt;h2 id="supported-environments">Supported Environments&lt;/h2>
 &lt;p>This SDK is a standard Node.js package built with TypeScript, ensuring broad compatibility with the modern JavaScript ecosystem.&lt;/p>
@@ -10726,7 +10838,7 @@ commands, and prompts to assist with your workflow.&lt;/p></description></item><
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="quickstart">Quickstart&lt;/h2>
 &lt;ol>
 &lt;li>
-&lt;p>&lt;strong>Start the Toolbox Service&lt;/strong>&lt;/p></description></item><item><title>Core</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python-sdk/core/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python-sdk/core/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>&lt;strong>Start the Toolbox Service&lt;/strong>&lt;/p></description></item><item><title>Core</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python/core/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python/core/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>The &lt;code>toolbox-core&lt;/code> package provides a Python interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
 &lt;h2 id="installation">Installation&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">pip install toolbox-core
@@ -11034,7 +11146,27 @@ instance.&lt;/a>&lt;/li>
 &lt;p>Download the latest version of Toolbox as a binary. Select the &lt;a href="https://github.com/googleapis/genai-toolbox/releases">correct
 binary&lt;/a> corresponding
 to your OS and CPU architecture. You are required to use Toolbox version
-v0.15.0+:&lt;/p></description></item><item><title>PostgreSQL using MCP</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/postgres_mcp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/postgres_mcp/</guid><description>&lt;p>&lt;a href="https://modelcontextprotocol.io/introduction">Model Context Protocol (MCP)&lt;/a> is
+v0.15.0+:&lt;/p></description></item><item><title>Oracle using MCP</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/</guid><description>&lt;p>&lt;a href="https://modelcontextprotocol.io/introduction">Model Context Protocol (MCP)&lt;/a> is
+an open protocol for connecting Large Language Models (LLMs) to data sources
+like Oracle. This guide covers how to use &lt;a href="https://github.com/googleapis/genai-toolbox">MCP Toolbox for Databases&lt;/a>
+to expose your developer assistant tools to an Oracle instance:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/#configure-your-mcp-client">Cursor&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/#configure-your-mcp-client">Windsurf&lt;/a> (Codium)&lt;/li>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/#configure-your-mcp-client">Visual Studio Code&lt;/a> (Copilot)&lt;/li>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/#configure-your-mcp-client">Cline&lt;/a> (VS Code extension)&lt;/li>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/#configure-your-mcp-client">Claude desktop&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/#configure-your-mcp-client">Claude code&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/#configure-your-mcp-client">Gemini CLI&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/oracle_mcp/#configure-your-mcp-client">Gemini Code Assist&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="set-up-the-database">Set up the database&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Create or select an Oracle instance.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Create or reuse a database user and have the username and password ready.&lt;/p></description></item><item><title>PostgreSQL using MCP</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/postgres_mcp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/how-to/connect-ide/postgres_mcp/</guid><description>&lt;p>&lt;a href="https://modelcontextprotocol.io/introduction">Model Context Protocol (MCP)&lt;/a> is
 an open protocol for connecting Large Language Models (LLMs) to data sources
 like Postgres. This guide covers how to use &lt;a href="https://github.com/googleapis/genai-toolbox">MCP Toolbox for Databases&lt;/a>
 to expose your developer assistant tools to a Postgres instance:&lt;/p>
@@ -11830,7 +11962,7 @@ local development:&lt;/p>
 (ADC)&lt;/a>&lt;/p>
 &lt;/li>
 &lt;li>
-&lt;p>Set your project and enable Vertex AI&lt;/p></description></item><item><title>LangChain/LangGraph</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python-sdk/langchain/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python-sdk/langchain/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>Set your project and enable Vertex AI&lt;/p></description></item><item><title>LangChain/LangGraph</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python/langchain/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python/langchain/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>The &lt;code>toolbox-langchain&lt;/code> package provides a Python interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
 &lt;h2 id="installation">Installation&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">pip install toolbox-langchain
@@ -12117,7 +12249,16 @@ columns, constraints, and indexes. It&amp;rsquo;s compatible with:&lt;/p>
 &lt;p>This tool is read-only and executes pre-defined SQL queries against the
 &lt;code>INFORMATION_SCHEMA&lt;/code> tables to gather metadata. The tool automatically detects
 the database dialect from the source configuration and uses the appropriate SQL
-syntax.&lt;/p></description></item><item><title>clickhouse-list-tables</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/clickhouse/clickhouse-list-tables/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/clickhouse/clickhouse-list-tables/</guid><description>&lt;h2 id="about">About&lt;/h2>
+syntax.&lt;/p></description></item><item><title>Style Guide</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/concepts/style-guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/concepts/style-guide/</guid><description>&lt;p>This document provides style guidelines and best practices for developers building MCP tools using &lt;strong>MCP Toolbox&lt;/strong>. Following these standards ensures that agents can reason effectively, security is maintained, and user intent is met with high precision.&lt;/p>
+&lt;h2 id="combatting-context-rot-and-tool-limits">Combatting &amp;ldquo;Context Rot&amp;rdquo; and Tool Limits&lt;/h2>
+&lt;p>Excessive or irrelevant tool definitions lead to &lt;strong>&amp;ldquo;Context Rot&amp;rdquo;&lt;/strong>, where the model&amp;rsquo;s attention is diluted by &amp;ldquo;distractor&amp;rdquo; tokens, causing reasoning accuracy to collapse.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Toolsets:&lt;/strong> Use the MCP Toolbox &lt;strong>toolsets&lt;/strong> feature to group tools by capability or persona (e.g., &lt;code>cloud-sql-admin&lt;/code> vs. &lt;code>cloud-sql-data&lt;/code>). This ensures the agent only sees tools relevant to its immediate intent.&lt;/li>
+&lt;li>&lt;strong>Target Limits:&lt;/strong> Aim for &lt;strong>5–8 tools per toolset&lt;/strong> (organized by Critical User Journey). While the platform supports more, performance and accuracy are highest when the agent is exposed to a cognitively manageable list of actions. The current rule of thumb is to try to keep it to 40 tools per server as an upper limit, though even this amount may cause performance issues. Performance degrades as more tools are added, so teams should heavily weigh adding new tools against the negative impact on tool accuracy until other mechanisms are in place to deal with this.&lt;/li>
+&lt;/ul>
+&lt;h2 id="naming-conventions">Naming Conventions&lt;/h2>
+&lt;h3 id="tool-names">Tool Names&lt;/h3>
+&lt;p>Use &lt;code>snake_case&lt;/code> with the pattern &lt;code>&amp;lt;action&amp;gt;_&amp;lt;resource&amp;gt;&lt;/code>. Avoid product-specific prefixes, as agents can disambiguate tools by the MCP server name.&lt;/p></description></item><item><title>clickhouse-list-tables</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/clickhouse/clickhouse-list-tables/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/tools/clickhouse/clickhouse-list-tables/</guid><description>&lt;h2 id="about">About&lt;/h2>
 &lt;p>A &lt;code>clickhouse-list-tables&lt;/code> tool lists all available tables in a specified
 ClickHouse database. It&amp;rsquo;s compatible with the
 &lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2619/resources/sources/clickhouse/">clickhouse&lt;/a> source.&lt;/p>
@@ -12236,7 +12377,7 @@ section.&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;5000:5000&amp;#34;&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./config:/config&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">command&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;toolbox&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--tools-file&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;/config/tools.yaml&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--address&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">command&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--tools-file&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;/config/tools.yaml&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--address&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">depends_on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">db&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">condition&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">service_healthy&lt;/span>&lt;span class="w">
@@ -12266,7 +12407,7 @@ section.&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">tool-network&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">tool-network&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre>&lt;code>&lt;style type="text/css">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;style type="text/css">
  
  .notice {
  --title-color: #fff;
@@ -12526,7 +12667,7 @@ local development:&lt;/p>
 (ADC)&lt;/a>&lt;/p>
 &lt;/li>
 &lt;li>
-&lt;p>Set your project and enable Vertex AI&lt;/p></description></item><item><title>LlamaIndex</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python-sdk/llamaindex/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python-sdk/llamaindex/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>Set your project and enable Vertex AI&lt;/p></description></item><item><title>LlamaIndex</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python/llamaindex/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2619/sdks/python/llamaindex/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>The &lt;code>toolbox-llamaindex&lt;/code> package provides a Python interface to the MCP Toolbox service, enabling you to load and invoke tools from your own applications.&lt;/p>
 &lt;h2 id="installation">Installation&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">pip install toolbox-llamaindex
