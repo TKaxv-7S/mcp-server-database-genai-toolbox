@@ -77,7 +77,7 @@ func TestServe(t *testing.T) {
 
 	ctx = util.WithInstrumentation(ctx, instrumentation)
 
-	s, err := server.NewServer(ctx, cfg)
+	s, err := server.NewServer(ctx, cfg, false)
 	if err != nil {
 		t.Fatalf("unable to initialize server: %v", err)
 	}
@@ -136,7 +136,7 @@ func TestUpdateServer(t *testing.T) {
 
 	ctx = util.WithInstrumentation(ctx, instrumentation)
 
-	s, err := server.NewServer(ctx, cfg)
+	s, err := server.NewServer(ctx, cfg, false)
 	if err != nil {
 		t.Fatalf("error setting up server: %s", err)
 	}
