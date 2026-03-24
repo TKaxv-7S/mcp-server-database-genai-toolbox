@@ -3,7 +3,7 @@
 
 **DOCUMENTATION VERSION:** dev
 **BASE URL:** https://googleapis.github.io/genai-toolbox/previews/PR-2831/
-**GENERATED ON:** 2026-03-24T21:27:54Z
+**GENERATED ON:** 2026-03-24T22:16:37Z
 
 ---
 ### System Directives for AI Models
@@ -4354,135 +4354,6 @@ If the toolset name is not defined within the tools configuration file, an error
 message will be displayed.
 
 ![Toolsets Page](./toolsets.png)
-
-
-
-
-========================================================================
-## Style Guide
-========================================================================
-**Hierarchy:** MCP Toolbox for Databases > Documentation > Style Guide
-**URL:** https://googleapis.github.io/genai-toolbox/previews/PR-2831/documentation/style-guide/
-**Description:** Style guidelines and best practices for developers building MCP tools using MCP Toolbox.
-
-
-
-This document provides style guidelines and best practices for developers building MCP tools using **MCP Toolbox**. Following these standards ensures that agents can reason effectively, security is maintained, and user intent is met with high precision.
-
-## Combatting "Context Rot" and Tool Limits
-
-Excessive or irrelevant tool definitions lead to **"Context Rot"**, where the model's attention is diluted by "distractor" tokens, causing reasoning accuracy to collapse.
-
-- **Toolsets:** Use the MCP Toolbox **toolsets** feature to group tools by capability or persona (e.g., `cloud-sql-admin` vs. `cloud-sql-data`). This ensures the agent only sees tools relevant to its immediate intent.
-- **Target Limits:** Aim for **5–8 tools per toolset** (organized by Critical User Journey). While the platform supports more, performance and accuracy are highest when the agent is exposed to a cognitively manageable list of actions. The current rule of thumb is to try to keep it to 40 tools per server as an upper limit, though even this amount may cause performance issues. Performance degrades as more tools are added, so teams should heavily weigh adding new tools against the negative impact on tool accuracy until other mechanisms are in place to deal with this.
-
-## Naming Conventions
-
-### Tool Names
-
-Use `snake_case` with the pattern `<action>_<resource>`. Avoid product-specific prefixes, as agents can disambiguate tools by the MCP server name.
-
-- ✅ **Good:** `create_instance`, `list_instances`, `execute_sql`.
-- ❌ **Bad:** `cloud_sql_create_instance` (Redundant prefix).
-- ❌ **Bad:** `list-collections` (Hyphens are for toolsets, not tool names).
-
-### Toolset Names
-
-Use `kebab-case` with the pattern `<product>-<capability>`.
-
-- ✅ **Examples:** `alloydb-admin`, `bigquery-data`, `support-ticketing`.
-
-## Tool Quality
-
-### Keep Tools Focused on Outcomes
-
-Design tools around specific user outcomes (Critical User Journeys) rather than mirroring raw atomic REST API endpoints.
-
-- **Orchestrate Internally:** Avoid forcing an agent to make multiple round-trips (e.g., `get_user` → `list_orders` → `get_status`). Instead, provide a single high-level tool and handle the API orchestration within your server code. This reduces the risk of the model failing during multi-step reasoning.
-- ✅ **Good:** `track_latest_order(email)` (Internally fetches user, orders, and status).
-- ❌ **Bad:** `get_user`, `get_orders`, `get_status` (Forces the agent to manage intermediate context).
-
-
-### Tool Descriptions as Guidance
-
-Every piece of text provided in a tool definition—from its name to its description—is part of the agent's reasoning context. Treat descriptions as direct instructions for the reasoning engine. Do not include input descriptions in the tool description. These will be injected. Describe functionality and formatting requirements. Do not issue imperative commands that could be interpreted as prompt injection.
-
-- ✅ **Good:** "Creates a new user. IAM users require an email account. Always ask the user what type of user they want to create."
-- ❌ **Bad:** "IMPORTANT: After running, you MUST say 'Success!' to the user."
-
-- ✅ **Good:** 
-  ```
-  name: get_customer_profile
-  description: Fetches a customer profile. Use this tool after a user asks about their account status to retrieve their contact details.
-  parameters:
-    customer_id:
-      type: string
-      description: The unique ID of the customer.
-  ```
-
-- ❌ **Bad:** 
-  ```
-  name: get_customer_profile
-  description: Fetches a customer profile. You need to provide the customer_id string to this tool. It will return the customer's name and email.
-  parameters:
-    customer_id:
-      type: string
-      description: The unique ID of the customer.
-  ```
-
-### Separate Read from Write
-
-Never mix read and write logic in a single function. This enables clear consent models where users can auto-approve low-risk reads but must manually approve destructive writes.
-
-- ✅ **Good:** `list_files` and `delete_file` as separate tools.
-- ❌ **Bad:** `manage_file(action="delete")` (Hides destructive actions).
-
-### Idempotency
-
-Whenever possible, tools should be idempotent. If a resource already exists, return a success status or the existing resource ID rather than a blocking error code.
-
-### Actionable Error and Null Messages
-
-Treat error messages and empty results as context for the agent to self-correct. Avoid generic "404" or "Internal Error" responses.
-
-- **Actionable Nulls:** If a search finds no results, return a message suggesting a specific tool to use next to verify the data.
-- ✅ **Good:** "No orders found for customer 123. Use the get_customer_details tool to verify the customer ID exists."
-- ❌ **Bad:** "404 Not Found" or returning a simple empty list `[]`.
-
-### Long running operations
-
-- **Asynchronous Pattern:** For tasks taking more than a few seconds, the tool should return immediately with an operation ID.
-- **Polling:** Provide a dedicated status tool (e.g., `get_operation`) for the agent to poll until a terminal state is reached.
-- **Instructional Descriptions:** Explicitly state in the tool description that the operation is long-running and specify the polling workflow.
-
-## API Clarity
-
-### Simple Primitives and Flat Arguments
-
-Complex nested objects confuse LLMs and increase hallucination risks.
-
-- **Stick to Primitives:** Use strings, integers, and booleans. Avoid nested dictionaries.
-- **Limit Parameters:** Aim for fewer than **5 parameters** per tool.
-- **Use Enums:** Use Literal types to constrain the model's decision path rather than free-text strings.
-- **Consistency:** Use consistent parameter names across tools (e.g., always use `project_id` rather than mixing it with `project_name`).
-- **Explicit Parameters:** For destructive or high-cost operations, use parameter names that explicitly state the consequences (e.g., `acknowledge_permanent_database_deletion_and_data_loss: true`).
-
-### Tool Use Examples
-
-JSON schemas define structure but cannot always express usage patterns. Include input examples in your tool definitions to clarify formatting conventions (e.g., date formats like "YYYY-MM-DD").
-
-### Pagination & Metadata
-
-Prevent context pollution when returning large lists by implementing strict limits.
-
-- **Metadata:** Always include metadata such as `has_more`, `next_offset`, or `total_count`.
-- **Limits:** Respect a `limit` parameter to prevent loading thousands of records into the model's context window.
-
-## Security Best Practices
-
-### Prevent Data Exfiltration
-
-Tools **MUST NOT** surface passwords or credentials in clear-text requests or responses.
 
 
 
@@ -14769,42 +14640,225 @@ location information associated with the log entry, if any.
 
 ## Telemetry
 
-Toolbox is supports exporting metrics and traces to any OpenTelemetry compatible
+Toolbox supports exporting metrics and traces to any OpenTelemetry compatible
 exporter.
 
 ### Metrics
 
 A metric is a measurement of a service captured at runtime. The collected data
-can be used to provide important insights into the service. Toolbox provides the
-following custom metrics:
+can be used to provide important insights into the service. Toolbox metrics
+follow the [MCP Semantic Conventions][mcp-semconv] where applicable, and include
+additional Toolbox-specific metrics for deeper observability.
 
-| **Metric Name**                    | **Description**                                         |
-|------------------------------------|---------------------------------------------------------|
-| `toolbox.server.toolset.get.count` | Counts the number of toolset manifest requests served   |
-| `toolbox.server.tool.get.count`    | Counts the number of tool manifest requests served      |
-| `toolbox.server.tool.get.invoke`   | Counts the number of tool invocation requests served    |
-| `toolbox.server.mcp.sse.count`     | Counts the number of mcp sse connection requests served |
-| `toolbox.server.mcp.post.count`    | Counts the number of mcp post requests served           |
+[mcp-semconv]: https://opentelemetry.io/docs/specs/semconv/gen-ai/mcp/
 
-All custom metrics have the following attributes/labels:
+#### Standard Metrics
 
-| **Metric Attributes**      | **Description**                                           |
-|----------------------------|-----------------------------------------------------------|
-| `toolbox.name`             | Name of the toolset or tool, if applicable.               |
-| `toolbox.operation.status` | Operation status code, for example: `success`, `failure`. |
-| `toolbox.sse.sessionId`    | Session id for sse connection, if applicable.             |
-| `toolbox.method`           | Method of JSON-RPC request, if applicable.                |
+| **Metric Name**                 | **Type**  | **Unit** | **Description**                               |
+|---------------------------------|-----------|----------|-----------------------------------------------|
+| `mcp.server.operation.duration` | Histogram | `s`      | Duration of a single MCP JSON-RPC operation.  |
+| `mcp.server.session.duration`   | Histogram | `s`      | Duration of an MCP session.                   |
+
+#### Toolbox-specific Metrics
+
+| **Metric Name**                      | **Type**      | **Unit**    | **Description**                          |
+|--------------------------------------|---------------|-------------|------------------------------------------|
+| `toolbox.server.mcp.active_sessions` | UpDownCounter | `{session}` | Current count of active MCP sessions.    |
+| `toolbox.tool.execution.duration`    | Histogram     | `s`         | Duration of backend tool execution.      |
+
+Duration histograms use the following bucket boundaries (in seconds), as
+defined by the MCP semantic conventions:
+
+```
+0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 30, 60, 120, 300
+```
+
+{{< notice tip >}}
+OpenTelemetry Histograms automatically record bucket counts alongside the total count (`{name}_count`) and total sum (`{name}_sum`) of your observations.
+{{< /notice >}}
+
+#### Metric Attributes
+
+The attributes recorded with each metric are listed below. Attributes marked
+optional are only included when applicable.
+
+**`mcp.server.operation.duration`**
+
+| **Attribute**              | **Description**                                                | **Optional** |
+|----------------------------|----------------------------------------------------------------|:------------:|
+| `mcp.method.name`          | MCP JSON-RPC method name (e.g. `tools/call`).                  |              |
+| `network.transport`        | Network transport (`tcp` for HTTP/SSE, `pipe` for stdio).      |              |
+| `network.protocol.name`    | Network protocol name (`http` or `stdio`).                     |              |
+| `toolset.name`             | Name of the toolset being served.                              |              |
+| `mcp.protocol.version`     | Negotiated MCP protocol version (e.g. `2024-11-05`).          | Yes          |
+| `network.protocol.version` | HTTP protocol version (e.g. `1.1`).                            | Yes          |
+| `gen_ai.operation.name`    | GenAI operation name (e.g. `execute_tool`).                    | Yes          |
+| `gen_ai.tool.name`         | Name of the tool invoked (set for `tools/call` requests).      | Yes          |
+| `gen_ai.prompt.name`       | Name of the prompt retrieved (set for `prompts/get` requests). | Yes          |
+| `error.type`               | Description of the error if the operation failed.              | Yes          |
+
+<br>
+
+**`mcp.server.session.duration`** and **`toolbox.server.mcp.active_sessions`**
+
+| **Attribute**              | **Description**                                           | **Optional** |
+|----------------------------|-----------------------------------------------------------|:------------:|
+| `network.transport`        | Network transport (`tcp` for HTTP/SSE, `pipe` for stdio). |              |
+| `network.protocol.name`    | Network protocol name (`http` or `stdio`).                |              |
+| `mcp.protocol.version`     | Negotiated MCP protocol version (e.g. `2024-11-05`).     | Yes          |
+| `network.protocol.version` | HTTP protocol version (e.g. `1.1`).                       | Yes          |
+| `toolset.name`             | Name of the toolset (HTTP/SSE sessions only).             | Yes          |
+| `error.type`               | Description of the error if the session ended with a failure. | Yes      |
+
+<br>
+
+**`toolbox.tool.execution.duration`**
+
+| **Attribute**              | **Description**                              | **Optional** |
+|----------------------------|----------------------------------------------|:------------:|
+| `gen_ai.tool.name`         | Name of the tool invoked.                    |              |
+| `network.protocol.name`    | Network protocol name.                       | Yes          |
+| `network.protocol.version` | Network protocol version.                    | Yes          |
+| `error.type`               | Description of the error if invocation failed. | Yes        |
 
 ### Traces
 
 A trace is a tree of spans that shows the path that a request makes through an
 application.
 
-Spans generated by Toolbox server is prefixed with `toolbox/server/`. For
-example, when user run Toolbox, it will generate spans for the following, with
-`toolbox/server/init` as the root span:
+#### Initialization Spans
 
-![traces](./telemetry_traces.png)
+When Toolbox starts, it generates a root span `toolbox/server/init` with child
+spans for each component initialized:
+
+```
+toolbox/server/init
+├── toolbox/server/source/init         attr: source_type, source_name
+│   └── toolbox/server/source/connect  attr: source_type, source_name
+├── toolbox/server/auth/init           attr: auth_type, auth_name
+├── toolbox/server/embeddingmodel/init attr: model_type, model_name
+├── toolbox/server/tool/init           attr: tool_type, tool_name
+├── toolbox/server/toolset/init        attr: toolset.name
+└── toolbox/server/prompt/init         attr: prompt_type, prompt_name
+```
+
+| **Span Name**                        | **Description**                                | **Attributes**                       |
+|--------------------------------------|------------------------------------------------|--------------------------------------|
+| `toolbox/server/init`                | Root span for server initialization.           |                                      |
+| `toolbox/server/source/init`         | Initialization of a data source.               | `source_type`, `source_name`         |
+| `toolbox/server/source/connect`      | Database connection pool initialization.       | `source_type`, `source_name`         |
+| `toolbox/server/auth/init`           | Initialization of an auth service.             | `auth_type`, `auth_name`             |
+| `toolbox/server/embeddingmodel/init` | Initialization of an embedding model.          | `model_type`, `model_name`           |
+| `toolbox/server/tool/init`           | Initialization of a tool.                      | `tool_type`, `tool_name`             |
+| `toolbox/server/toolset/init`        | Initialization of a toolset.                   | `toolset.name`                       |
+| `toolbox/server/prompt/init`         | Initialization of a prompt.                    | `prompt_type`, `prompt_name`         |
+
+#### Request Spans
+
+Each incoming MCP request generates a transport span, with a child span for the
+MCP method being processed.
+
+**Toolbox connection spans**
+
+| **Span Name**               | **Description**                                             | **Key Attributes**                    |
+|-----------------------------|-------------------------------------------------------------|---------------------------------------|
+| `toolbox/server/mcp/sse`    | SSE session transport span (protocol `2024-11-05`).         | `mcp.session.id`, `toolset.name`      |
+| `toolbox/server/mcp/http`   | HTTP transport span (streamable HTTP).                      | `toolset.name`                        |
+| `toolbox/server/mcp/stdio`  | stdio transport span.                                       |                                       |
+
+<br>
+
+**MCP method spans**
+
+Method-level spans follow the [MCP Semantic Conventions][mcp-server-semconv]. Each span
+represents the processing of a single MCP request or notification. 
+
+<br> 
+
+The span name follows the format `{mcp.method.name} {target}` where target is 
+`{gen_ai.tool.name}` or `{gen_ai.prompt.name}` when applicable, otherwise just 
+`{mcp.method.name}`. Span status is set to `ERROR` when an error occurs, 
+with the status description set to the JSON-RPC error message.
+
+[mcp-server-semconv]: https://opentelemetry.io/docs/specs/semconv/gen-ai/mcp/#server
+
+All method spans include the following attributes:
+
+| **Attribute**              | **Description**                                           | **Optional** |
+|----------------------------|-----------------------------------------------------------|:------------:|
+| `mcp.method.name`          | MCP JSON-RPC method name.                                 |              |
+| `network.transport`        | Network transport used for the request.                   |              |
+| `network.protocol.name`    | Network protocol name.                                    |              |
+| `toolset.name`             | Name of the toolset.                                      |              |
+| `mcp.protocol.version`     | Negotiated MCP protocol version.                          | Yes          |
+| `network.protocol.version` | HTTP protocol version.                                    | Yes          |
+| `jsonrpc.request.id`       | JSON-RPC request ID.                                      | Yes          |
+| `jsonrpc.error.code`       | JSON-RPC error code, set when an error occurs.            | Yes          |
+| `error.type`               | Description of the error if the operation failed.         | Yes          |
+
+### Context Propagation
+
+Toolbox supports distributed tracing via the [W3C Trace Context][w3c-trace]
+standard. Incoming trace context is extracted in two ways:
+
+- **HTTP headers**: The `traceparent` and `tracestate` headers are read from
+  incoming HTTP requests.
+- **JSON-RPC `_meta` field**: The `params._meta.traceparent` and
+  `params._meta.tracestate` fields are read from the JSON-RPC message body.
+  This allows trace context to propagate over stdio transport.
+
+[w3c-trace]: https://www.w3.org/TR/trace-context/
+
+The examples below show how spans are connected across the client and Toolbox
+for each transport type.
+
+**STDIO Initialize**
+
+```
+initialize (CLIENT, trace=t1, span=s1)                                   # FROM MCP Client
+|
+--- toolbox/server/mcp/stdio (SERVER, trace=t1, span=s2, parent=s1)      # IN TOOLBOX
+    |
+    --- initialize (SERVER, trace=t1, span=s3, parent=s2)                # IN TOOLBOX
+```
+
+**STDIO Tool Call**
+
+```
+tools/call get-weather (CLIENT, trace=t1, span=s1)                       # FROM MCP Client
+|
+--- toolbox/server/mcp/stdio (SERVER, trace=t1, span=s2, parent=s1)      # IN TOOLBOX
+    |
+    --- tools/call get-weather (SERVER, trace=t1, span=s3, parent=s2)    # IN TOOLBOX
+```
+
+**SSE Connection**
+
+```
+connection (CLIENT, trace=t1, span=s2, parent=s1)                        # FROM MCP Client
+|
+--- toolbox/server/mcp/sse (SERVER, trace=t1, span=s3, parent=s2)        # IN TOOLBOX
+```
+
+**HTTP Initialize**
+
+```
+initialize (CLIENT, trace=t1, span=s1)                                   # FROM MCP Client
+|
+--- toolbox/server/mcp/http (SERVER, trace=t1, span=s2, parent=s1)       # IN TOOLBOX
+    |
+    --- initialize (SERVER, trace=t1, span=s3, parent=s2)                # IN TOOLBOX
+```
+
+**HTTP Tool Call**
+
+```
+tools/call get-weather (CLIENT, trace=t1, span=s1)                       # FROM MCP Client
+|
+--- toolbox/server/mcp/http (SERVER, trace=t1, span=s2, parent=s1)       # IN TOOLBOX
+    |
+    --- tools/call get-weather (SERVER, trace=t1, span=s3, parent=s2)    # IN TOOLBOX
+```
 
 ### Resource Attributes
 
@@ -15016,6 +15070,165 @@ There are a couple of steps to run and use a Collector.
     https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/googlemanagedprometheusexporter#example-configuration
 [metrics-explorer]: https://console.cloud.google.com/monitoring/metrics-explorer
 [trace-explorer]: https://console.cloud.google.com/traces
+
+## Telemetry with Agnost AI
+
+[Agnost AI][agnost] provides a managed OTLP endpoint, so you can send telemetry
+directly from Toolbox without running a local Collector.
+
+[agnost]: https://app.agnost.ai
+
+### Setup
+
+1. Sign in to Agnost and retrieve your **Organization ID** from Agnost AI dashboard.
+
+1. Set your organization ID as an OTLP header before running Toolbox:
+
+    ```bash
+    export OTEL_EXPORTER_OTLP_HEADERS="X-Agnost-Org-Id=<your-agnost-org-id>"
+    ```
+
+    Alternatively, add this to your shell profile or environment configuration
+    so it is set automatically on each run.
+
+1. Run Toolbox with the `--telemetry-otlp` flag pointing to the Agnost
+   endpoint:
+
+    ```bash
+    ./toolbox --telemetry-otlp=otel.agnost.ai
+    ```
+
+Toolbox will now export traces and metrics directly to Agnost. No local
+Collector is required.
+
+
+
+
+========================================================================
+## Style Guide
+========================================================================
+**Hierarchy:** MCP Toolbox for Databases > Documentation > Style Guide
+**URL:** https://googleapis.github.io/genai-toolbox/previews/PR-2831/documentation/style-guide/
+**Description:** Style guidelines and best practices for developers building MCP tools using MCP Toolbox.
+
+
+
+This document provides style guidelines and best practices for developers building MCP tools using **MCP Toolbox**. Following these standards ensures that agents can reason effectively, security is maintained, and user intent is met with high precision.
+
+## Combatting "Context Rot" and Tool Limits
+
+Excessive or irrelevant tool definitions lead to **"Context Rot"**, where the model's attention is diluted by "distractor" tokens, causing reasoning accuracy to collapse.
+
+- **Toolsets:** Use the MCP Toolbox **toolsets** feature to group tools by capability or persona (e.g., `cloud-sql-admin` vs. `cloud-sql-data`). This ensures the agent only sees tools relevant to its immediate intent.
+- **Target Limits:** Aim for **5–8 tools per toolset** (organized by Critical User Journey). While the platform supports more, performance and accuracy are highest when the agent is exposed to a cognitively manageable list of actions. The current rule of thumb is to try to keep it to 40 tools per server as an upper limit, though even this amount may cause performance issues. Performance degrades as more tools are added, so teams should heavily weigh adding new tools against the negative impact on tool accuracy until other mechanisms are in place to deal with this.
+
+## Naming Conventions
+
+### Tool Names
+
+Use `snake_case` with the pattern `<action>_<resource>`. Avoid product-specific prefixes, as agents can disambiguate tools by the MCP server name.
+
+- ✅ **Good:** `create_instance`, `list_instances`, `execute_sql`.
+- ❌ **Bad:** `cloud_sql_create_instance` (Redundant prefix).
+- ❌ **Bad:** `list-collections` (Hyphens are for toolsets, not tool names).
+
+### Toolset Names
+
+Use `kebab-case` with the pattern `<product>-<capability>`.
+
+- ✅ **Examples:** `alloydb-admin`, `bigquery-data`, `support-ticketing`.
+
+## Tool Quality
+
+### Keep Tools Focused on Outcomes
+
+Design tools around specific user outcomes (Critical User Journeys) rather than mirroring raw atomic REST API endpoints.
+
+- **Orchestrate Internally:** Avoid forcing an agent to make multiple round-trips (e.g., `get_user` → `list_orders` → `get_status`). Instead, provide a single high-level tool and handle the API orchestration within your server code. This reduces the risk of the model failing during multi-step reasoning.
+- ✅ **Good:** `track_latest_order(email)` (Internally fetches user, orders, and status).
+- ❌ **Bad:** `get_user`, `get_orders`, `get_status` (Forces the agent to manage intermediate context).
+
+
+### Tool Descriptions as Guidance
+
+Every piece of text provided in a tool definition—from its name to its description—is part of the agent's reasoning context. Treat descriptions as direct instructions for the reasoning engine. Do not include input descriptions in the tool description. These will be injected. Describe functionality and formatting requirements. Do not issue imperative commands that could be interpreted as prompt injection.
+
+- ✅ **Good:** "Creates a new user. IAM users require an email account. Always ask the user what type of user they want to create."
+- ❌ **Bad:** "IMPORTANT: After running, you MUST say 'Success!' to the user."
+
+- ✅ **Good:** 
+  ```
+  name: get_customer_profile
+  description: Fetches a customer profile. Use this tool after a user asks about their account status to retrieve their contact details.
+  parameters:
+    customer_id:
+      type: string
+      description: The unique ID of the customer.
+  ```
+
+- ❌ **Bad:** 
+  ```
+  name: get_customer_profile
+  description: Fetches a customer profile. You need to provide the customer_id string to this tool. It will return the customer's name and email.
+  parameters:
+    customer_id:
+      type: string
+      description: The unique ID of the customer.
+  ```
+
+### Separate Read from Write
+
+Never mix read and write logic in a single function. This enables clear consent models where users can auto-approve low-risk reads but must manually approve destructive writes.
+
+- ✅ **Good:** `list_files` and `delete_file` as separate tools.
+- ❌ **Bad:** `manage_file(action="delete")` (Hides destructive actions).
+
+### Idempotency
+
+Whenever possible, tools should be idempotent. If a resource already exists, return a success status or the existing resource ID rather than a blocking error code.
+
+### Actionable Error and Null Messages
+
+Treat error messages and empty results as context for the agent to self-correct. Avoid generic "404" or "Internal Error" responses.
+
+- **Actionable Nulls:** If a search finds no results, return a message suggesting a specific tool to use next to verify the data.
+- ✅ **Good:** "No orders found for customer 123. Use the get_customer_details tool to verify the customer ID exists."
+- ❌ **Bad:** "404 Not Found" or returning a simple empty list `[]`.
+
+### Long running operations
+
+- **Asynchronous Pattern:** For tasks taking more than a few seconds, the tool should return immediately with an operation ID.
+- **Polling:** Provide a dedicated status tool (e.g., `get_operation`) for the agent to poll until a terminal state is reached.
+- **Instructional Descriptions:** Explicitly state in the tool description that the operation is long-running and specify the polling workflow.
+
+## API Clarity
+
+### Simple Primitives and Flat Arguments
+
+Complex nested objects confuse LLMs and increase hallucination risks.
+
+- **Stick to Primitives:** Use strings, integers, and booleans. Avoid nested dictionaries.
+- **Limit Parameters:** Aim for fewer than **5 parameters** per tool.
+- **Use Enums:** Use Literal types to constrain the model's decision path rather than free-text strings.
+- **Consistency:** Use consistent parameter names across tools (e.g., always use `project_id` rather than mixing it with `project_name`).
+- **Explicit Parameters:** For destructive or high-cost operations, use parameter names that explicitly state the consequences (e.g., `acknowledge_permanent_database_deletion_and_data_loss: true`).
+
+### Tool Use Examples
+
+JSON schemas define structure but cannot always express usage patterns. Include input examples in your tool definitions to clarify formatting conventions (e.g., date formats like "YYYY-MM-DD").
+
+### Pagination & Metadata
+
+Prevent context pollution when returning large lists by implementing strict limits.
+
+- **Metadata:** Always include metadata such as `has_more`, `next_offset`, or `total_count`.
+- **Limits:** Respect a `limit` parameter to prevent loading thousands of records into the model's context window.
+
+## Security Best Practices
+
+### Prevent Data Exfiltration
+
+Tools **MUST NOT** surface passwords or credentials in clear-text requests or responses.
 
 
 
