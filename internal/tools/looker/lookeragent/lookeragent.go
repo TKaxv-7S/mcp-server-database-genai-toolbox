@@ -15,6 +15,7 @@ package lookeragent
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -69,10 +70,13 @@ func (cfg Config) ToolConfigType() string {
 }
 
 func (cfg Config) Initialize(srcs map[string]sources.Source) (tools.Tool, error) {
-	operationParameter := parameters.NewStringParameterWithAllowedValues("operation", "The operation to perform. Must be one of: `list`, `get`, `create`, or `delete`.", []any{"list", "get", "create", "delete"})
-	agentIdParameter := parameters.NewStringParameterWithDefault("agent_id", "", "The ID of the agent. Required for `get` and `delete` operations.")
+	operationParameter := parameters.NewStringParameterWithAllowedValues("operation", "The operation to perform. Must be one of: `list`, `get`, `create`, `update`, or `delete`.", []any{"list", "get", "create", "update", "delete"})
+	agentIdParameter := parameters.NewStringParameterWithDefault("agent_id", "", "The ID of the agent. Required for `get`, `update`, and `delete` operations.")
 	nameParameter := parameters.NewStringParameterWithDefault("name", "", "The name of the agent. Required for `create` operation.")
-	params := parameters.Parameters{operationParameter, agentIdParameter, nameParameter}
+	instructionsParameter := parameters.NewStringParameterWithDefault("instructions", "", "The instructions (system prompt) for the agent. Used for `create` and `update` operations.")
+	sourcesParameter := parameters.NewArrayParameterWithDefault("sources", []any{}, "Optional. A list of JSON-encoded data sources for the agent (e.g., ['{\"model\": \"my_model\", \"explore\": \"my_explore\"}']).", parameters.NewStringParameter("source", "A JSON-encoded source object with 'model' and 'explore' keys."))
+	codeInterpreterParameter := parameters.NewBooleanParameterWithDefault("code_interpreter", false, "Optional. Enables Code Interpreter for this Agent. Used for `create` and `update` operations.")
+	params := parameters.Parameters{operationParameter, agentIdParameter, nameParameter, instructionsParameter, sourcesParameter, codeInterpreterParameter}
 
 	annotations := cfg.Annotations
 
@@ -122,9 +126,37 @@ func (t Tool) Invoke(ctx context.Context, resourceMgr tools.SourceProvider, para
 
 	mapParams := params.AsMap()
 	logger.DebugContext(ctx, fmt.Sprintf("%s params = ", t.Name), mapParams)
-	operation := mapParams["operation"].(string)
-	agentId := mapParams["agent_id"].(string)
-	name := mapParams["name"].(string)
+
+	var operation, agentId, name, instructions string
+	if v, ok := mapParams["operation"].(string); ok {
+		operation = v
+	}
+	if v, ok := mapParams["agent_id"].(string); ok {
+		agentId = v
+	}
+	if v, ok := mapParams["name"].(string); ok {
+		name = v
+	}
+	if v, ok := mapParams["instructions"].(string); ok {
+		instructions = v
+	}
+
+	var agentSources []v4.Source
+	if raw, ok := mapParams["sources"].([]any); ok {
+		for _, rs := range raw {
+			sStr, ok := rs.(string)
+			if !ok {
+				return nil, util.NewClientServerError("invalid source format: expected string", http.StatusBadRequest, nil)
+			}
+			var s v4.Source
+			if err := json.Unmarshal([]byte(sStr), &s); err != nil {
+				return nil, util.NewClientServerError(fmt.Sprintf("error parsing source JSON %q: %v", sStr, err), http.StatusBadRequest, err)
+			}
+			agentSources = append(agentSources, s)
+		}
+	}
+
+	codeInterpreter, hasCodeInterpreter := mapParams["code_interpreter"].(bool)
 
 	switch operation {
 	case "list":
@@ -149,9 +181,44 @@ func (t Tool) Invoke(ctx context.Context, resourceMgr tools.SourceProvider, para
 		body := v4.WriteAgent{
 			Name: &name,
 		}
+		if instructions != "" {
+			body.Context = &v4.Context{
+				Instructions: &instructions,
+			}
+		}
+		if len(agentSources) > 0 {
+			body.Sources = &agentSources
+		}
+		if hasCodeInterpreter {
+			body.CodeInterpreter = &codeInterpreter
+		}
 		resp, err := sdk.CreateAgent(body, "", source.LookerApiSettings())
 		if err != nil {
 			return nil, util.NewClientServerError(fmt.Sprintf("error making create_agent request: %s", err), http.StatusInternalServerError, err)
+		}
+		return resp, nil
+	case "update":
+		if agentId == "" {
+			return nil, util.NewClientServerError(fmt.Sprintf("%s operation: agent_id must be specified", operation), http.StatusBadRequest, nil)
+		}
+		body := v4.WriteAgent{}
+		if name != "" {
+			body.Name = &name
+		}
+		if instructions != "" {
+			body.Context = &v4.Context{
+				Instructions: &instructions,
+			}
+		}
+		if len(agentSources) > 0 {
+			body.Sources = &agentSources
+		}
+		if hasCodeInterpreter {
+			body.CodeInterpreter = &codeInterpreter
+		}
+		resp, err := sdk.UpdateAgent(agentId, body, "", source.LookerApiSettings())
+		if err != nil {
+			return nil, util.NewClientServerError(fmt.Sprintf("error making update_agent request: %s", err), http.StatusInternalServerError, err)
 		}
 		return resp, nil
 	case "delete":
@@ -164,7 +231,7 @@ func (t Tool) Invoke(ctx context.Context, resourceMgr tools.SourceProvider, para
 		}
 		return resp, nil
 	default:
-		return nil, util.NewClientServerError(fmt.Sprintf("unknown operation: %s. Must be one of `list`, `get`, `create`, or `delete`", operation), http.StatusBadRequest, nil)
+		return nil, util.NewClientServerError(fmt.Sprintf("unknown operation: %s. Must be one of `list`, `get`, `create`, `update`, or `delete`", operation), http.StatusBadRequest, nil)
 	}
 }
 
