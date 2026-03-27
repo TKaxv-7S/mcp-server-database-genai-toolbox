@@ -36,8 +36,49 @@ func adminRouter(s *Server) (chi.Router, error) {
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 
 	r.Put("/{kind}/{name}", func(w http.ResponseWriter, r *http.Request) { createOrUpdatePrimitives(s, w, r) })
+	r.Delete("/{kind}/{name}", func(w http.ResponseWriter, r *http.Request) { deletePrimitives(s, w, r) })
 
 	return r, nil
+}
+
+// deletePrimitives handles the deletion of primitives
+// Invalid primitive kind will result in http.StatusBadRequest
+// Primitive not found will result in http.StatusNotFound
+func deletePrimitives(s *Server, w http.ResponseWriter, r *http.Request) {
+	kind := chi.URLParam(r, "kind")
+	name := chi.URLParam(r, "name")
+	ctx := r.Context()
+	ctx = util.WithInstrumentation(ctx, s.instrumentation)
+
+	var deleted bool
+	switch strings.ToLower(kind) {
+	case "source":
+		deleted = s.ResourceMgr.DeleteSource(name)
+	case "authservice":
+		deleted = s.ResourceMgr.DeleteAuthService(name)
+	case "embeddingmodel":
+		deleted = s.ResourceMgr.DeleteEmbeddingModel(name)
+	case "tool":
+		deleted = s.ResourceMgr.DeleteTool(name)
+	case "toolset":
+		deleted = s.ResourceMgr.DeleteToolset(name)
+	case "prompt":
+		deleted = s.ResourceMgr.DeletePrompt(name)
+	default:
+		err := fmt.Errorf("invalid primitive kind provided")
+		s.logger.DebugContext(ctx, err.Error())
+		_ = render.Render(w, r, newErrResponse(err, http.StatusBadRequest))
+		return
+	}
+
+	if !deleted {
+		err := fmt.Errorf("%s %s not found", kind, name)
+		s.logger.DebugContext(ctx, err.Error())
+		_ = render.Render(w, r, newErrResponse(err, http.StatusNotFound))
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 // createOrUpdatePrimitives handles the creation or updating of primitives

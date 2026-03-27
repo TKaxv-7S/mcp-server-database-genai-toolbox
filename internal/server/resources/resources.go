@@ -260,6 +260,7 @@ func (r *ResourceManager) UpdateEmbeddingModel(ctx context.Context, name string,
 	return nil
 }
 
+// removeFirstFromToolset removes a target tool from toolset
 func removeFirstFromToolset(ts tools.Toolset, target string) tools.Toolset {
 	for i, tool := range ts.Tools {
 		if tool != nil && (*tool) != nil && (*tool).McpManifest().Name == target {
@@ -374,4 +375,83 @@ func (r *ResourceManager) UpdatePrompt(ctx context.Context, name string, config 
 	}
 	r.prompts[name] = p
 	return nil
+}
+
+// DeleteSource deletes a source.
+func (r *ResourceManager) DeleteSource(name string) bool {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	_, ok := r.sources[name]
+	if !ok {
+		return false
+	}
+	delete(r.sources, name)
+	return true
+}
+
+// DeleteAuthService deletes an auth service.
+func (r *ResourceManager) DeleteAuthService(name string) bool {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	_, ok := r.authServices[name]
+	if !ok {
+		return false
+	}
+	delete(r.authServices, name)
+	return true
+}
+
+// DeleteEmbeddingModel deletes an embedding model.
+func (r *ResourceManager) DeleteEmbeddingModel(name string) bool {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	_, ok := r.embeddingModels[name]
+	if !ok {
+		return false
+	}
+	delete(r.embeddingModels, name)
+	return true
+}
+
+// DeleteTool deletes a tool.
+func (r *ResourceManager) DeleteTool(name string) bool {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	_, ok := r.tools[name]
+	if !ok {
+		return false
+	}
+	delete(r.tools, name)
+
+	// Also remove the tool from the default toolset
+	// This function do not remove tool from other toolset. User have to update
+	// toolset explicitly
+	if defaultToolset, toolsetExists := r.toolsets[""]; toolsetExists {
+		r.toolsets[""] = removeFirstFromToolset(defaultToolset, name)
+	}
+	return true
+}
+
+// DeleteToolset deletes a toolset.
+func (r *ResourceManager) DeleteToolset(name string) bool {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	_, ok := r.toolsets[name]
+	if !ok {
+		return false
+	}
+	delete(r.toolsets, name)
+	return true
+}
+
+// DeletePrompt deletes a prompt.
+func (r *ResourceManager) DeletePrompt(name string) bool {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	_, ok := r.prompts[name]
+	if !ok {
+		return false
+	}
+	delete(r.prompts, name)
+	return true
 }

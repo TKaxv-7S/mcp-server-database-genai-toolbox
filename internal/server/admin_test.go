@@ -68,7 +68,7 @@ func init() {
 	})
 }
 
-func TestUpdateEndpoint(t *testing.T) {
+func TestAdminUpdateEndpoint(t *testing.T) {
 	r, shutdown := setUpServer(t, "admin", map[string]sources.Source{}, map[string]auth.AuthService{}, map[string]embeddingmodels.EmbeddingModel{}, map[string]tools.Tool{}, map[string]tools.Toolset{}, map[string]prompts.Prompt{}, map[string]prompts.Promptset{})
 	defer shutdown()
 	ts := runServer(r, false)
@@ -135,6 +135,87 @@ func TestUpdateEndpoint(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			resp, body, err := runRequest(ts, http.MethodPut, fmt.Sprintf("/%s/%s", tt.kind, tt.resourceName), bytes.NewBuffer([]byte(tt.requestBody)), nil)
+			if err != nil {
+				t.Fatalf("unexpected error during request: %s", err)
+			}
+			if resp.StatusCode != tt.expectedStatusCode {
+				t.Fatalf("response status code is not %d, got %d, %s", tt.expectedStatusCode, resp.StatusCode, string(body))
+			}
+		})
+	}
+}
+
+func TestAdminDeleteEndpoint(t *testing.T) {
+	mockSources := map[string]sources.Source{"test-source": testutils.MockSource{}}
+	mockAuthServices := map[string]auth.AuthService{"test-auth-service": testutils.MockAuthService{}}
+	mockEmbeddingModel := map[string]embeddingmodels.EmbeddingModel{"test-embedding-model": testutils.MockEmbeddingModel{}}
+	mockTool := map[string]tools.Tool{"test-tool": testutils.MockTool{}}
+	mockToolset := map[string]tools.Toolset{"test-toolset": tools.Toolset{}}
+	mockPrompt := map[string]prompts.Prompt{"test-prompt": testutils.MockPrompt{}}
+	r, shutdown := setUpServer(t, "admin", mockSources, mockAuthServices, mockEmbeddingModel, mockTool, mockToolset, mockPrompt, map[string]prompts.Promptset{})
+	defer shutdown()
+	ts := runServer(r, false)
+	defer ts.Close()
+
+	tests := []struct {
+		name               string
+		kind               string
+		resourceName       string
+		expectedStatusCode int
+	}{
+		{
+			name:               "Delete Source - Success",
+			kind:               "source",
+			resourceName:       "test-source",
+			expectedStatusCode: http.StatusOK,
+		},
+		{
+			name:               "Delete Auth Service - Success",
+			kind:               "authService",
+			resourceName:       "test-auth-service",
+			expectedStatusCode: http.StatusOK,
+		},
+		{
+			name:               "Delete Embedding Model - Success",
+			kind:               "embeddingModel",
+			resourceName:       "test-embedding-model",
+			expectedStatusCode: http.StatusOK,
+		},
+		{
+			name:               "Delete Tool - Success",
+			kind:               "tool",
+			resourceName:       "test-tool",
+			expectedStatusCode: http.StatusOK,
+		},
+		{
+			name:               "Delete Toolset - Success",
+			kind:               "toolset",
+			resourceName:       "test-toolset",
+			expectedStatusCode: http.StatusOK,
+		},
+		{
+			name:               "Delete Prompt - Success",
+			kind:               "prompt",
+			resourceName:       "test-prompt",
+			expectedStatusCode: http.StatusOK,
+		},
+		{
+			name:               "Delete Non-existent Primitive - Not Found",
+			kind:               "source",
+			resourceName:       "non-existent-source",
+			expectedStatusCode: http.StatusNotFound,
+		},
+		{
+			name:               "Delete with Invalid Kind - Bad Request",
+			kind:               "invalidKind",
+			resourceName:       "some-name",
+			expectedStatusCode: http.StatusBadRequest,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			resp, body, err := runRequest(ts, http.MethodDelete, fmt.Sprintf("/%s/%s", tt.kind, tt.resourceName), nil, nil)
 			if err != nil {
 				t.Fatalf("unexpected error during request: %s", err)
 			}

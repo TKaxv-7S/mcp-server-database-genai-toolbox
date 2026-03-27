@@ -255,3 +255,94 @@ func TestCreateAndUpdatePrimitives(t *testing.T) {
 		t.Fatalf("update failed: got %+v, want %+v", pc, pConfig)
 	}
 }
+
+func TestDeletePrimitives(t *testing.T) {
+	resMgr := resources.NewResourceManager(
+		map[string]sources.Source{"foo": testutils.MockSource{}},
+		map[string]auth.AuthService{"foo": testutils.MockAuthService{}},
+		map[string]embeddingmodels.EmbeddingModel{"foo": testutils.MockEmbeddingModel{}},
+		map[string]tools.Tool{"foo": testutils.MockTool{}},
+		map[string]tools.Toolset{"foo": tools.Toolset{}},
+		map[string]prompts.Prompt{"foo": testutils.MockPrompt{}},
+		map[string]prompts.Promptset{},
+	)
+
+	var deleted, found bool
+	deleted = resMgr.DeleteSource("foo")
+	if !deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+	_, found = resMgr.GetSource("foo")
+	if found {
+		t.Fatalf("found source but expected to be deleted")
+	}
+	deleted = resMgr.DeleteSource("nonexistent")
+	if deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+
+	deleted = resMgr.DeleteAuthService("foo")
+	if !deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+	_, found = resMgr.GetAuthService("foo")
+	if found {
+		t.Fatalf("found auth service but expected to be deleted")
+	}
+	deleted = resMgr.DeleteAuthService("nonexistent")
+	if deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+
+	deleted = resMgr.DeleteEmbeddingModel("foo")
+	if !deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+	_, found = resMgr.GetEmbeddingModel("foo")
+	if found {
+		t.Fatalf("found embedding model but expected to be deleted")
+	}
+	deleted = resMgr.DeleteEmbeddingModel("nonexistent")
+	if deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+
+	deleted = resMgr.DeleteTool("foo")
+	if !deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+	_, found = resMgr.GetTool("foo")
+	if found {
+		t.Fatalf("found tool but expected to be deleted")
+	}
+	deleted = resMgr.DeleteTool("nonexistent")
+	if deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+
+	deleted = resMgr.DeleteToolset("foo")
+	if !deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+	_, found = resMgr.GetToolset("foo")
+	if found {
+		t.Fatalf("found toolset but expected to be deleted")
+	}
+	deleted = resMgr.DeleteToolset("nonexistent")
+	if deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+
+	deleted = resMgr.DeletePrompt("foo")
+	if !deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+	_, found = resMgr.GetPrompt("foo")
+	if found {
+		t.Fatalf("found prompt but expected to be deleted")
+	}
+	deleted = resMgr.DeletePrompt("nonexistent")
+	if deleted {
+		t.Fatalf("expected delete to be successful")
+	}
+}
