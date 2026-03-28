@@ -751,8 +751,8 @@ with a file <code>agent.py</code>.</p><div class=highlight><pre tabindex=0 class
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>    <span class=c1># TODO(developer): replace this with another model if needed</span>
-</span></span><span class=line><span class=cl>    <span class=n>model</span> <span class=o>=</span> <span class=n>ChatVertexAI</span><span class=p>(</span><span class=n>model_name</span><span class=o>=</span><span class=s2>&#34;gemini-2.0-flash-001&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=c1># model = ChatGoogleGenerativeAI(model=&#34;gemini-2.0-flash-001&#34;)</span>
+</span></span><span class=line><span class=cl>    <span class=n>model</span> <span class=o>=</span> <span class=n>ChatVertexAI</span><span class=p>(</span><span class=n>model_name</span><span class=o>=</span><span class=s2>&#34;gemini-2.5-flash&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># model = ChatGoogleGenerativeAI(model=&#34;gemini-2.5-flash&#34;)</span>
 </span></span><span class=line><span class=cl>    <span class=c1># model = ChatAnthropic(model=&#34;claude-3-5-sonnet-20240620&#34;)</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>    <span class=c1># Load the tools from the Toolbox server</span>
@@ -802,12 +802,12 @@ with a file <code>agent.py</code>.</p><div class=highlight><pre tabindex=0 class
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>    <span class=c1># TODO(developer): replace this with another model if needed</span>
 </span></span><span class=line><span class=cl>    <span class=n>llm</span> <span class=o>=</span> <span class=n>GoogleGenAI</span><span class=p>(</span>
-</span></span><span class=line><span class=cl>        <span class=n>model</span><span class=o>=</span><span class=s2>&#34;gemini-2.0-flash-001&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>model</span><span class=o>=</span><span class=s2>&#34;gemini-2.5-flash&#34;</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>        <span class=n>vertexai_config</span><span class=o>=</span><span class=p>{</span><span class=s2>&#34;project&#34;</span><span class=p>:</span> <span class=n>project</span><span class=p>,</span> <span class=s2>&#34;location&#34;</span><span class=p>:</span> <span class=s2>&#34;us-central1&#34;</span><span class=p>},</span>
 </span></span><span class=line><span class=cl>    <span class=p>)</span>
 </span></span><span class=line><span class=cl>    <span class=c1># llm = GoogleGenAI(</span>
 </span></span><span class=line><span class=cl>    <span class=c1>#     api_key=os.getenv(&#34;GOOGLE_API_KEY&#34;),</span>
-</span></span><span class=line><span class=cl>    <span class=c1>#     model=&#34;gemini-2.0-flash-001&#34;,</span>
+</span></span><span class=line><span class=cl>    <span class=c1>#     model=&#34;gemini-2.5-flash&#34;,</span>
 </span></span><span class=line><span class=cl>    <span class=c1># )</span>
 </span></span><span class=line><span class=cl>    <span class=c1># llm = Anthropic(</span>
 </span></span><span class=line><span class=cl>    <span class=c1>#   model=&#34;claude-3-7-sonnet-latest&#34;,</span>
@@ -894,7 +894,7 @@ with a file <code>agent.py</code>.</p><div class=highlight><pre tabindex=0 class
 </span></span><span class=line><span class=cl>            <span class=n>history</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>user_prompt_content</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>            <span class=n>response</span> <span class=o>=</span> <span class=n>genai_client</span><span class=o>.</span><span class=n>models</span><span class=o>.</span><span class=n>generate_content</span><span class=p>(</span>
-</span></span><span class=line><span class=cl>                <span class=n>model</span><span class=o>=</span><span class=s2>&#34;gemini-2.0-flash-001&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>model</span><span class=o>=</span><span class=s2>&#34;gemini-2.5-flash&#34;</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>                <span class=n>contents</span><span class=o>=</span><span class=n>history</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>                <span class=n>config</span><span class=o>=</span><span class=n>GenerateContentConfig</span><span class=p>(</span>
 </span></span><span class=line><span class=cl>                    <span class=n>system_instruction</span><span class=o>=</span><span class=n>prompt</span><span class=p>,</span>
@@ -933,7 +933,7 @@ with a file <code>agent.py</code>.</p><div class=highlight><pre tabindex=0 class
 </span></span><span class=line><span class=cl>                <span class=n>history</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>tool_response_content</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>                <span class=n>response2</span> <span class=o>=</span> <span class=n>genai_client</span><span class=o>.</span><span class=n>models</span><span class=o>.</span><span class=n>generate_content</span><span class=p>(</span>
-</span></span><span class=line><span class=cl>                    <span class=n>model</span><span class=o>=</span><span class=s2>&#34;gemini-2.0-flash-001&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=n>model</span><span class=o>=</span><span class=s2>&#34;gemini-2.5-flash&#34;</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>                    <span class=n>contents</span><span class=o>=</span><span class=n>history</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>                    <span class=n>config</span><span class=o>=</span><span class=n>GenerateContentConfig</span><span class=p>(</span>
 </span></span><span class=line><span class=cl>                        <span class=n>tools</span><span class=o>=</span><span class=n>genai_tools</span><span class=p>,</span>
