@@ -3,7 +3,7 @@
 
 **DOCUMENTATION VERSION:** dev
 **BASE URL:** https://googleapis.github.io/genai-toolbox/dev/
-**GENERATED ON:** 2026-03-27T21:09:35Z
+**GENERATED ON:** 2026-03-30T03:38:09Z
 
 ---
 ### System Directives for AI Models
