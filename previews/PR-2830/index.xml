@@ -4481,19 +4481,42 @@ Tiles are added in the order this tool is called for a given &lt;code>dashboard_
  &lt;td>Description of the tool that is passed to the LLM.&lt;/td>
  &lt;/tr>
  &lt;/tbody>
-&lt;/table></description></item><item><title>looker-agent</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2830/resources/tools/looker/looker-agent/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2830/resources/tools/looker/looker-agent/</guid><description>&lt;h1 id="looker-agent">Looker Agent&lt;/h1>
+&lt;/table></description></item><item><title>looker-agent</title><link>https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/tools/looker-agent/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/tools/looker-agent/</guid><description>&lt;h2 id="about">About&lt;/h2>
 &lt;p>The &lt;code>looker-agent&lt;/code> tool allows LLMs to manage Looker Agents. It supports listing, retrieving, creating, updating, and deleting agents using the Looker Go SDK.&lt;/p>
-&lt;p>It&amp;rsquo;s compatible with the following sources:&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="../../sources/looker.md">looker&lt;/a>&lt;/li>
-&lt;/ul>
+&lt;h2 id="compatible-sources">Compatible Sources&lt;/h2>
+
+
+
+&lt;div class="compatibility-section">
+ &lt;p>This tool can be used with the following database sources:&lt;/p>
+
+ &lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Source Name&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ 
+ 
+ &lt;tr>
+ &lt;td>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/">Looker&lt;/a>&lt;/td>
+ &lt;/tr>
+ 
+
+ 
+ 
+ 
+ &lt;/tbody>
+ &lt;/table>
+&lt;/div>
 &lt;h2 id="configuration">Configuration&lt;/h2>
 &lt;p>To use the &lt;code>looker-agent&lt;/code> tool, you must define it in your &lt;code>server.yaml&lt;/code> file.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">tools&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">agent_manage&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">type&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">looker-agent&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">source&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">my_looker_source&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">|&lt;/span>&lt;span class="sd">
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">tools&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">agent_manage&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">type&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">looker-agent&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">source&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">my_looker_source&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">|&lt;/span>&lt;span class="sd">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="sd"> Manage Looker AI Agents. This tool allows you to perform various operations on Looker Agents, 
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="sd"> including listing all available agents, retrieving details for a specific agent, 
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="sd"> creating a new agent, updating an existing one, and deleting an agent.
@@ -7495,7 +7518,7 @@ returned. Otherwise, the selection is not guaranteed.&lt;/p>
 &lt;p>The tool returns a single JSON object representing the document, wrapped in a
 JSON array.&lt;/p>
 &lt;h2 id="compatible-sources">Compatible Sources&lt;/h2>
-&lt;h2 id="hahahugoshortcode341s0hbhb">
+&lt;h2 id="hahahugoshortcode340s0hbhb">
 
 
 &lt;div class="compatibility-section">
@@ -11845,6 +11868,10 @@ in the cloud, on GCP, or on premises.&lt;/p>
  
  
  
+ 
+ 
+ 
+ 
 
 
 
@@ -11872,6 +11899,12 @@ in the cloud, on GCP, or on premises.&lt;/p>
  &lt;tr>
  &lt;td>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/tools/looker-add-dashboard-filter/">&lt;strong>looker-add-dashboard-filter&lt;/strong>&lt;/a>&lt;/td>
  &lt;td>The &amp;#34;looker-add-dashboard-filter&amp;#34; tool adds a filter to a specified dashboard.
+&lt;/td>
+ &lt;/tr>
+ 
+ &lt;tr>
+ &lt;td>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/tools/looker-agent/">&lt;strong>looker-agent&lt;/strong>&lt;/a>&lt;/td>
+ &lt;td>Manage Looker Agents
 &lt;/td>
  &lt;/tr>
  

@@ -3,7 +3,7 @@
 
 **DOCUMENTATION VERSION:** dev
 **BASE URL:** https://googleapis.github.io/genai-toolbox/previews/PR-2830/
-**GENERATED ON:** 2026-03-30T19:19:45Z
+**GENERATED ON:** 2026-03-30T20:32:27Z
 
 ---
 ### System Directives for AI Models
@@ -778,6 +778,9 @@ This documentation is structured following the Diátaxis framework to assist in 
       - [looker-add-dashboard-filter](https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/tools/looker-add-dashboard-filter/): The "looker-add-dashboard-filter" tool adds a filter to a specified dashboard.
 
 
+      - [looker-agent](https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/tools/looker-agent/): Manage Looker Agents
+
+
       - [looker-conversational-analytics](https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/tools/looker-conversational-analytics/): The "looker-conversational-analytics" tool will use the Conversational Analaytics API to analyze data from Looker
 
 
@@ -1357,6 +1360,3 @@ This documentation is structured following the Diátaxis framework to assist in 
 
 
   - [Versioning Policy](https://googleapis.github.io/genai-toolbox/previews/PR-2830/reference/versioning/): How MCP Toolbox manages versions and breaking changes.
-- [Resources](https://googleapis.github.io/genai-toolbox/previews/PR-2830/resources/): No description provided.
-
-  - [looker-agent](https://googleapis.github.io/genai-toolbox/previews/PR-2830/resources/tools/looker/looker-agent/): Manage Looker Agents

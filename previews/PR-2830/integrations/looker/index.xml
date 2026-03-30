@@ -168,6 +168,10 @@ in the cloud, on GCP, or on premises.&lt;/p>
  
  
  
+ 
+ 
+ 
+ 
 
 
 
@@ -195,6 +199,12 @@ in the cloud, on GCP, or on premises.&lt;/p>
  &lt;tr>
  &lt;td>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/tools/looker-add-dashboard-filter/">&lt;strong>looker-add-dashboard-filter&lt;/strong>&lt;/a>&lt;/td>
  &lt;td>The &amp;#34;looker-add-dashboard-filter&amp;#34; tool adds a filter to a specified dashboard.
+&lt;/td>
+ &lt;/tr>
+ 
+ &lt;tr>
+ &lt;td>&lt;a href="https://googleapis.github.io/genai-toolbox/previews/PR-2830/integrations/looker/tools/looker-agent/">&lt;strong>looker-agent&lt;/strong>&lt;/a>&lt;/td>
+ &lt;td>Manage Looker Agents
 &lt;/td>
  &lt;/tr>
  
