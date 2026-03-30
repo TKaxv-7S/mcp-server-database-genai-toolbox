@@ -33,7 +33,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-var apiKey = os.Getenv("API_KEY")
+var ApiKey = os.Getenv("API_KEY")
 
 // AddSemanticSearchConfig adds embedding models and semantic search tools to the config
 // with configurable tool kind and SQL statements.
@@ -42,7 +42,7 @@ func AddSemanticSearchConfig(t *testing.T, config map[string]any, toolKind, inse
 		"gemini_model": map[string]any{
 			"kind":      "gemini",
 			"model":     "gemini-embedding-001",
-			"apiKey":    apiKey,
+			"apiKey":    ApiKey,
 			"dimension": 768,
 		},
 	}

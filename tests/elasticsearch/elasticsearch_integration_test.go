@@ -74,10 +74,7 @@ func TestElasticsearchToolEndpoints(t *testing.T) {
 
 	toolsConfig := getElasticsearchToolsConfig(sourceConfig, ElasticsearchToolType, paramToolStatement, idParamToolStatement, nameParamToolStatement, arrayParamToolStatement, authToolStatement)
 
-	// Add semantic search config
-	searchStmt := fmt.Sprintf("FROM %s | WHERE embedding IS NOT NULL | EVAL score = COSINE_SIMILARITY(embedding, ?query) | SORT score DESC | LIMIT 1 | KEEP id, name", index)
-	insertStmt := fmt.Sprintf("FROM %s | WHERE name == ?content OR name == ?text_to_embed | LIMIT 0", index)
-	toolsConfig = tests.AddSemanticSearchConfig(t, toolsConfig, ElasticsearchToolType, insertStmt, searchStmt)
+	toolsConfig = addSemanticSearchConfig(t, toolsConfig, index)
 
 	cmd, cleanup, err := tests.StartCmd(ctx, toolsConfig, args...)
 	if err != nil {
@@ -347,4 +344,59 @@ func getElasticsearchToolsConfig(sourceConfig map[string]any, toolType, paramToo
 		},
 	}
 	return toolsFile
+}
+
+func addSemanticSearchConfig(t *testing.T, config map[string]any, index string) map[string]any {
+	config["embeddingModels"] = map[string]any{
+		"gemini_model": map[string]any{
+			"kind":      "gemini",
+			"model":     "gemini-embedding-001",
+			"apiKey":    tests.ApiKey,
+			"dimension": 768,
+		},
+	}
+
+	tools, ok := config["tools"].(map[string]any)
+	if !ok {
+		t.Fatalf("unable to get tools from config")
+	}
+
+	tools["insert_docs"] = map[string]any{
+		"kind":        ElasticsearchToolType,
+		"source":      "my-instance",
+		"description": "Stores content and its vector embedding into the documents table.",
+		"query":   fmt.Sprintf("FROM %s | WHERE name == ?content OR name == ?text_to_embed | LIMIT 0", index),
+		"parameters": []any{
+			map[string]any{
+				"name":        "content",
+				"type":        "string",
+				"description": "The text content associated with the vector.",
+			},
+			map[string]any{
+				"name":           "text_to_embed",
+				"type":           "string",
+				"description":    "The text content used to generate the vector.",
+				"embeddedBy":     "gemini_model",
+				"valueFromParam": "content",
+			},
+		},
+	}
+
+	tools["search_docs"] = map[string]any{
+		"kind":        ElasticsearchToolType,
+		"source":      "my-instance",
+		"description": "Finds the most semantically similar document to the query vector.",
+		"query":   fmt.Sprintf("FROM %s | WHERE embedding IS NOT NULL | EVAL score = COSINE_SIMILARITY(embedding, ?query) | SORT score DESC | LIMIT 1 | KEEP id, name", index),
+		"parameters": []any{
+			map[string]any{
+				"name":        "query",
+				"type":        "string",
+				"description": "The text content to search for.",
+				"embeddedBy":  "gemini_model",
+			},
+		},
+	}
+
+	config["tools"] = tools
+	return config
 }
