@@ -899,7 +899,7 @@ steps:
       - "GOPATH=/gopath"
       - "MONGODB_DATABASE=$_DATABASE_NAME"
       - "SERVICE_ACCOUNT_EMAIL=$SERVICE_ACCOUNT_EMAIL"
-    secretEnv: ["MONGODB_URI", "CLIENT_ID"]
+    secretEnv: ["MONGODB_URI", "CLIENT_ID", "API_KEY"]
     volumes:
       - name: "go"
         path: "/gopath"
@@ -913,7 +913,9 @@ steps:
           .ci/test_with_coverage.sh \
             "MongoDB" \
             mongodb \
-            mongodb
+            mongodb \
+            "" \
+            "API_KEY"
         else
           echo "No relevant changes for MongoDB. Skipping shard."
           exit 0

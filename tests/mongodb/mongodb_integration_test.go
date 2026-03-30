@@ -134,6 +134,11 @@ func TestMongoDBToolEndpoints(t *testing.T) {
 	aggregate1Want := `[{"id":2}]`
 	aggregateManyWant := `[{"id":500},{"id":501}]`
 	runToolAggregateInvokeTest(t, aggregate1Want, aggregateManyWant)
+
+	insertWant := "1"
+	mcpInsertWant := "0"
+	searchWant := `[{"found":true}]`
+	tests.RunSemanticSearchToolInvokeTest(t, insertWant, mcpInsertWant, searchWant)
 }
 
 func runToolDeleteInvokeTest(t *testing.T, delete1Want, deleteManyWant string) {
@@ -494,6 +499,14 @@ func getMongoDBToolsConfig(sourceConfig map[string]any, toolType string) map[str
 				"clientId": tests.ClientId,
 			},
 		},
+		"embeddingModels": map[string]any{
+			"gemini_model": map[string]any{
+				"kind":      "gemini",
+				"model":     "gemini-embedding-001",
+				"dimension": 768,
+				"apiKey":    os.Getenv("API_KEY"),
+			},
+		},
 		"tools": map[string]any{
 			"my-simple-tool": map[string]any{
 				"type":           "mongodb-find-one",
@@ -772,6 +785,52 @@ func getMongoDBToolsConfig(sourceConfig map[string]any, toolType string) map[str
 						"name":        "name",
 						"type":        "string",
 						"description": "user name",
+					},
+				},
+				"database": MongoDbDatabase,
+			},
+			"insert_docs": map[string]any{
+				"type":          "mongodb-update-one",
+				"source":        "my-instance",
+				"description":   "Tool to test semantic vector formatting inserts.",
+				"authRequired":  []string{},
+				"collection":    "test_collection",
+				"canonical":     true,
+				"filterPayload": `{ "content": {{json .content}} }`,
+				"filterParams": []map[string]any{
+					{
+						"name":        "content",
+						"type":        "string",
+						"description": "text content",
+					},
+				},
+				"updatePayload": `{ "$set": { "embedding": {{json .text_to_embed}} } }`,
+				"updateParams": []map[string]any{
+					{
+						"name":           "text_to_embed",
+						"type":           "string",
+						"description":    "vector payload",
+						"embeddedBy":     "gemini_model",
+						"valueFromParam": "content",
+					},
+				},
+				"upsert":   true,
+				"database": MongoDbDatabase,
+			},
+			"search_docs": map[string]any{
+				"type":            "mongodb-aggregate",
+				"source":          "my-instance",
+				"description":     "Tool to test semantic vector formatting searches.",
+				"authRequired":    []string{},
+				"collection":      "test_collection",
+				"canonical":       true,
+				"pipelinePayload": `[{ "$match" : { "content": "The quick brown fox jumps over the lazy dog" } }, { "$addFields": { "found": { "$isArray": {{ .query | json }} } } }, { "$project" : { "_id" : 0, "found" : 1 } }]`,
+				"pipelineParams": []map[string]any{
+					{
+						"name":        "query",
+						"type":        "string",
+						"description": "text to embed",
+						"embeddedBy":  "gemini_model",
 					},
 				},
 				"database": MongoDbDatabase,
