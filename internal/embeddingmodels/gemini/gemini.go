@@ -63,7 +63,7 @@ func (cfg Config) Initialize(ctx context.Context) (embeddingmodels.EmbeddingMode
 	// Create new Gemini API client
 	client, err := genai.NewClient(ctx, configs)
 	if err != nil {
-		return nil, fmt.Errorf("unable to create Gemini API client")
+		return nil, fmt.Errorf("unable to create Gemini API client: %w", err)
 	}
 
 	m := &EmbeddingModel{
