@@ -4,8 +4,6 @@ type: docs
 weight: 1
 description: >
   Manage Looker Agents
-aliases:
-- /resources/tools/looker-agent
 ---
 
 ## About
@@ -22,14 +20,14 @@ This tool requires the underlying Looker Go SDK to support the `Agent` API resou
 
 ## Parameters
 
-| **Parameter** | **Type** | **Required** | **Description** |
-|:-------------|:--------:|:------------:|:----------------|
-| `operation` | `string` | Yes | The operation to perform. Must be one of: `list`, `get`, `create`, `update`, or `delete`. |
-| `agent_id` | `string` | No | The ID of the agent. Required for `get`, `update`, and `delete` operations. |
-| `name` | `string` | No | The name of the agent. Required for `create` operation. |
-| `instructions` | `string` | No | The instructions (system prompt) for the agent. Used for `create` and `update` operations. |
-| sources | array | No | Optional. A list of JSON-encoded data sources, where each is a string with 'model' and 'explore' keys. |
-| `code_interpreter` | `boolean` | No | Optional. Enables Code Interpreter for this Agent. |
+| **Parameter**      | **Type**  | **Required** | **Description**                                                                                        |
+|:-------------------|:---------:|:------------:|:-------------------------------------------------------------------------------------------------------|
+| `operation`        | `string`  |     Yes      | The operation to perform. Must be one of: `list`, `get`, `create`, `update`, or `delete`.              |
+| `agent_id`         | `string`  |      No      | The ID of the agent. Required for `get`, `update`, and `delete` operations.                            |
+| `name`             | `string`  |      No      | The name of the agent. Required for `create` operation.                                                |
+| `instructions`     | `string`  |      No      | The instructions (system prompt) for the agent. Used for `create` and `update` operations.             |
+| `sources`          |  `array`  |      No      | Optional. A list of JSON-encoded data sources, where each is a string with 'model' and 'explore' keys. |
+| `code_interpreter` | `boolean` |      No      | Optional. Enables Code Interpreter for this Agent.                                                     |
 
 ## Example
 
