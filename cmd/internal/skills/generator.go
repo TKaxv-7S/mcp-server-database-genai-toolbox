@@ -124,36 +124,10 @@ const nodeScriptTemplate = `#!/usr/bin/env node
 const { spawn, execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 
 const toolName = "{{.Name}}";
 const configArgs = [{{.ConfigArgs}}];
-
-function getToolboxPath() {
-    if (process.env.GEMINI_CLI === '1') {
-        const localPath = path.resolve(__dirname, '../../../toolbox');
-        if (fs.existsSync(localPath)) {
-            return localPath;
-        }
-    }
-    try {
-        const checkCommand = process.platform === 'win32' ? 'where toolbox' : 'which toolbox';
-        const globalPath = execSync(checkCommand, { stdio: 'pipe', encoding: 'utf-8' }).trim();
-        if (globalPath) {
-            return globalPath.split('\n')[0].trim();
-        }
-        throw new Error("Toolbox binary not found");
-    } catch (e) {
-        throw new Error("Toolbox binary not found");
-    }
-}
-
-let toolboxBinary;
-try {
-    toolboxBinary = getToolboxPath();
-} catch (err) {
-    console.error("Error:", err.message);
-    process.exit(1);
-}
 
 function getEnv() {
     const envPath = path.resolve(__dirname, '../../../.env');
@@ -186,10 +160,26 @@ if (process.env.GEMINI_CLI === '1') {
 }
 
 const args = process.argv.slice(2);
+const npxArgs = ["--yes", "@toolbox-sdk/server", "--log-level", "error", ...configArgs, "invoke", toolName, "--user-agent-metadata", userAgent, ...args];
 
-const toolboxArgs = ["--log-level", "error", ...configArgs, "invoke", toolName, "--user-agent-metadata", userAgent, ...args];
+let command = 'npx';
+let spawnArgs = npxArgs;
 
-const child = spawn(toolboxBinary, toolboxArgs, { stdio: 'inherit', env });
+// The Windows Dependency-Free Bypass
+if (os.platform() === 'win32') {
+    const nodeDir = path.dirname(process.execPath);
+    const npxCliJs = path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npx-cli.js');
+
+    if (fs.existsSync(npxCliJs)) {
+        command = process.execPath; 
+        spawnArgs = [npxCliJs, ...npxArgs]; 
+    } else {
+        console.error("Error: Could not find the npx executable to launch.");
+        process.exit(1);
+    }
+}
+
+const child = spawn(command, spawnArgs, { stdio: 'inherit', env });
 
 child.on('close', (code) => {
   process.exit(code);
