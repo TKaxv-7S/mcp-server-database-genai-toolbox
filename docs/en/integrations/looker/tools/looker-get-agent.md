@@ -1,29 +1,16 @@
 ---
-title: "looker-get-agent Tool"
+title: "looker-get-agent"
+type: docs
+weight: 1
+description: >
+  "looker-get-agent" retrieves a Looker Conversation Analytics agent.
 ---
 
 ## About
 
 The `looker-get-agent` tool allows LLMs to retrieve a specific Looker Agent by ID using the Looker Go SDK.
 
-## Requirements
-
 To use the `looker-get-agent` tool, you must define it in your `server.yaml` file.
-
-```yaml
-tools:
-  - kind: tool
-    name: looker-get-agent
-    type: looker-get-agent
-    source: my-looker-instance
-    description: "Retrieve a Looker agent."
-```
-
-## Parameters
-
-- `agent_id` (string): The ID of the agent.
-
-## Example
 
 ```json
 {
@@ -33,3 +20,27 @@ tools:
   }
 }
 ```
+
+## Compatible Sources
+
+{{< compatible-sources >}}
+
+## Example
+
+```yaml
+kind: tool
+name: get_agent
+type: looker-get-agent
+source: my-looker-instance
+description: |
+  Retrieve a Looker agent.
+  - `agent_id` (string): The ID of the agent.
+```
+
+## Reference
+
+| **field**   | **type** | **required** | **description**                                    |
+|-------------|:--------:|:------------:|----------------------------------------------------|
+| type        |  string  |     true     | Must be "looker-get-agent".                        |
+| source      |  string  |     true     | Name of the Looker source.                         |
+| description |  string  |     true     | Description of the tool that is passed to the LLM. |

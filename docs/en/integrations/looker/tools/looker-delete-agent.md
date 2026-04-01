@@ -1,29 +1,14 @@
 ---
-title: "looker-delete-agent Tool"
+title: "looker-delete-agent"
+type: docs
+weight: 1
+description: >
+  "looker-delete-agent" deletes a Looker Conversation Analytics agent.
 ---
 
 ## About
 
 The `looker-delete-agent` tool allows LLMs to delete a Looker Agent using the Looker Go SDK.
-
-## Requirements
-
-To use the `looker-delete-agent` tool, you must define it in your `server.yaml` file.
-
-```yaml
-tools:
-  - kind: tool
-    name: looker-delete-agent
-    type: looker-delete-agent
-    source: my-looker-instance
-    description: "Delete a Looker agent."
-```
-
-## Parameters
-
-- `agent_id` (string): The ID of the agent.
-
-## Example
 
 ```json
 {
@@ -33,3 +18,29 @@ tools:
   }
 }
 ```
+
+## Compatible Sources
+
+{{< compatible-sources >}}
+
+## Example
+
+To use the `looker-delete-agent` tool, you must define it in your `server.yaml` file.
+
+```yaml
+kind: tool
+name: delete_agent
+type: looker-delete-agent
+source: my-looker-instance
+description: |
+  Delete a Looker agent.
+  - `agent_id` (string): The ID of the agent.
+```
+
+## Reference
+
+| **field**   | **type** | **required** | **description**                                    |
+|-------------|:--------:|:------------:|----------------------------------------------------|
+| type        |  string  |     true     | Must be "looker-delete-agent".                     |
+| source      |  string  |     true     | Name of the Looker source.                         |
+| description |  string  |     true     | Description of the tool that is passed to the LLM. |
