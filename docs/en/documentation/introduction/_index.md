@@ -67,7 +67,7 @@ Add the following to your client's MCP configuration file (usually `mcp.json` or
 }
 ```
 
-Set the appropriate environment variables to connect, see the [Prebuilt Tools Reference](https://googleapis.github.io/genai-toolbox/reference/prebuilt-tools/).
+Set the appropriate environment variables to connect, see the [Prebuilt Tools Reference](https://googleapis.github.io/mcp-toolbox/reference/prebuilt-tools/).
 
 When you run Toolbox with a `--prebuilt=<database>` flag, you instantly get access to standard tools to interact with that database. 
 
@@ -75,7 +75,7 @@ Supported databases currently include:
 - **Google Cloud:** AlloyDB, BigQuery, Cloud SQL (PostgreSQL, MySQL, SQL Server), Spanner, Firestore, Dataplex
 - **Other Databases:** PostgreSQL, MySQL, SQL Server, Oracle, MongoDB, Redis, Elasticsearch, CockroachDB, ClickHouse, Couchbase, Neo4j, Snowflake, Trino, and more.
 
-For a full list of available tools and their capabilities across all supported databases, see the [Prebuilt Tools Reference](https://googleapis.github.io/genai-toolbox/reference/prebuilt-tools/).
+For a full list of available tools and their capabilities across all supported databases, see the [Prebuilt Tools Reference](https://googleapis.github.io/mcp-toolbox/reference/prebuilt-tools/).
 
 #### Custom Tools
 
@@ -94,7 +94,7 @@ This method is optimized for convenience rather than performance. For a more sta
 For the latest version, check the [releases page][releases] and use the
 following instructions for your OS and CPU architecture.
 
-[releases]: https://github.com/googleapis/genai-toolbox/releases
+[releases]: https://github.com/googleapis/mcp-toolbox/releases
 
 <!-- {x-release-please-start-version} -->
 {{< tabpane text=true >}}
@@ -179,7 +179,7 @@ To install from source, ensure you have the latest version of
 [Go installed](https://go.dev/doc/install), and then run the following command:
 
 ```sh
-go install github.com/googleapis/genai-toolbox@v0.31.0
+go install github.com/googleapis/mcp-toolbox@v0.31.0
 ```
 
 {{% /tab %}}
@@ -736,4 +736,4 @@ For end-to-end samples on using the Toolbox Go SDK with ADK Go, see the [module'
 For more detailed instructions on using the Toolbox Go SDK, see the
 [README](https://github.com/googleapis/mcp-toolbox-sdk-go/blob/main/core/README.md).
 
-For more details, see the [Generate Agent Skills guide](https://googleapis.github.io/genai-toolbox/how-to/generate_skill/).
+For more details, see the [Generate Agent Skills guide](https://googleapis.github.io/mcp-toolbox/how-to/generate_skill/).

@@ -43,9 +43,9 @@ jobs:
           
           git show origin/main:docs/en/documentation/configuration/toolbox-ui/edit-headers.gif > docs/en/how-to/toolbox-ui/edit-headers.gif
           
-          sed -i 's|/genai-toolbox/|/|g' .hugo/layouts/partials/navbar-version-selector.html
+          sed -i 's|/mcp-toolbox/|/|g' .hugo/layouts/partials/navbar-version-selector.html
 
-          sed -i 's|https://googleapis.github.io/genai-toolbox|https://mcp-toolbox.dev|g' .hugo/hugo.toml
+          sed -i 's|https://googleapis.github.io/mcp-toolbox|https://mcp-toolbox.dev|g' .hugo/hugo.toml
 
           git show origin/main:.hugo/hugo.cloudflare.toml > modern_config.toml
           
@@ -56,7 +56,7 @@ jobs:
           let old = fs.readFileSync('.hugo/hugo.toml', 'utf8');
           
           // Convert any old GitHub URLs to Cloudflare in the rest of the config
-          old = old.replace(/https:\/\/googleapis\.github\.io\/genai-toolbox/g, 'https://mcp-toolbox.dev');
+          old = old.replace(/https:\/\/googleapis\.github\.io\/mcp-toolbox/g, 'https://mcp-toolbox.dev');
           
           // Erase the outdated version list from the old config
           old = old.replace(/\[\[params\.versions\]\][\s\S]*?(?=\n\[\[|\n\[|$)/g, '');
