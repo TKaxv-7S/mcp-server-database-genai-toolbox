@@ -172,9 +172,9 @@ func TestInvokeValidation(t *testing.T) {
 			desc: "invalid source format",
 			params: parameters.ParamValues{
 				{Name: "agent_id", Value: "test"},
-				{Name: "sources", Value: []any{123}}, // Should be string
+				{Name: "sources", Value: []map[string]string{{"foo": "test", "bar": "test"}}},
 			},
-			wantErr: "invalid source format: expected map, got int",
+			wantErr: "invalid source format: expected model of type string",
 		},
 	}
 

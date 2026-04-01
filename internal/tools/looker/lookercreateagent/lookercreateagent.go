@@ -71,14 +71,14 @@ func (cfg Config) ToolConfigType() string {
 func (cfg Config) Initialize(srcs map[string]sources.Source) (tools.Tool, error) {
 	nameParameter := parameters.NewStringParameterWithDefault("name", "", "The name of the agent.")
 	instructionsParameter := parameters.NewStringParameterWithDefault("instructions", "", "The instructions (system prompt) for the agent.")
-	sourcesParameter := parameters.NewArrayParameterWithDefault(
+	sourcesParameter := parameters.NewArrayParameterWithRequired(
 		"sources",
-		[]any{},
 		"Optional. A list of JSON-encoded data sources for the agent (e.g., [{\"model\": \"my_model\", \"explore\": \"my_explore\"}]).",
+		false,
 		parameters.NewMapParameter(
 			"source",
 			"A JSON-encoded source object with 'model' and 'explore' keys.",
-			"",
+			"string",
 		),
 	)
 	codeInterpreterParameter := parameters.NewBooleanParameterWithDefault("code_interpreter", false, "Optional. Enables Code Interpreter for this Agent.")
@@ -147,26 +147,24 @@ func (t Tool) Invoke(ctx context.Context, resourceMgr tools.SourceProvider, para
 		instructions = v
 	}
 
-	sources, _ := mapParams["sources"].([]any)
-
 	agentSources := make([]v4.Source, 0)
-	for _, s := range sources {
-		typedSource, ok := s.(map[string]any)
-		if !ok {
-			return nil, util.NewClientServerError(fmt.Sprintf("invalid source format: expected map, got %T", s), http.StatusBadRequest, nil)
+	if _, ok := mapParams["sources"]; ok {
+		sources, _ := mapParams["sources"].([]map[string]string)
+
+		for _, s := range sources {
+			model, ok := s["model"]
+			if !ok {
+				return nil, util.NewClientServerError("invalid source format: expected model of type string", http.StatusBadRequest, nil)
+			}
+			explore, ok := s["explore"]
+			if !ok {
+				return nil, util.NewClientServerError("invalid source format: expected explore of type string", http.StatusBadRequest, nil)
+			}
+			agentSources = append(agentSources, v4.Source{
+				Model:   &model,
+				Explore: &explore,
+			})
 		}
-		model, ok := typedSource["model"].(string)
-		if !ok {
-			return nil, util.NewClientServerError(fmt.Sprintf("invalid source format: expected model of type string, got %T", s.(map[string]any)["model"]), http.StatusBadRequest, nil)
-		}
-		explore, ok := typedSource["explore"].(string)
-		if !ok {
-			return nil, util.NewClientServerError(fmt.Sprintf("invalid source format: expected explore of type string, got %T", s.(map[string]any)["explore"]), http.StatusBadRequest, nil)
-		}
-		agentSources = append(agentSources, v4.Source{
-			Model:   &model,
-			Explore: &explore,
-		})
 	}
 
 	codeInterpreter, hasCodeInterpreter := mapParams["code_interpreter"].(bool)
