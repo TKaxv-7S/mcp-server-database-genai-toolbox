@@ -79,7 +79,7 @@ func (cfg Config) Initialize(srcs map[string]sources.Source) (tools.Tool, error)
 		parameters.NewMapParameter(
 			"source",
 			"A JSON-encoded source object with 'model' and 'explore' keys.",
-		    "",
+			"",
 		),
 	)
 	codeInterpreterParameter := parameters.NewBooleanParameterWithDefault("code_interpreter", false, "Optional. Enables Code Interpreter for this Agent.")
@@ -155,8 +155,18 @@ func (t Tool) Invoke(ctx context.Context, resourceMgr tools.SourceProvider, para
 
 	agentSources := make([]v4.Source, 0)
 	for _, s := range sources {
-		model := s.(map[string]any)["model"].(string)
-		explore := s.(map[string]any)["explore"].(string)
+		typedSource, ok := s.(map[string]any)
+		if !ok {
+			return nil, util.NewClientServerError(fmt.Sprintf("invalid source format: expected map, got %T", s), http.StatusBadRequest, nil)
+		}
+		model, ok := typedSource["model"].(string)
+		if !ok {
+			return nil, util.NewClientServerError(fmt.Sprintf("invalid source format: expected model of type string, got %T", s.(map[string]any)["model"]), http.StatusBadRequest, nil)
+		}
+		explore, ok := typedSource["explore"].(string)
+		if !ok {
+			return nil, util.NewClientServerError(fmt.Sprintf("invalid source format: expected explore of type string, got %T", s.(map[string]any)["explore"]), http.StatusBadRequest, nil)
+		}
 		agentSources = append(agentSources, v4.Source{
 			Model:   &model,
 			Explore: &explore,

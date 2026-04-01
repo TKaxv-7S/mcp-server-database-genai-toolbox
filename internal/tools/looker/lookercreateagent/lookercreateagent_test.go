@@ -174,15 +174,7 @@ func TestInvokeValidation(t *testing.T) {
 				{Name: "name", Value: "test"},
 				{Name: "sources", Value: []any{123}}, // Should be string
 			},
-			wantErr: "invalid source format: expected string",
-		},
-		{
-			desc: "invalid source JSON",
-			params: parameters.ParamValues{
-				{Name: "name", Value: "test"},
-				{Name: "sources", Value: []any{"invalid json"}},
-			},
-			wantErr: "error parsing source JSON",
+			wantErr: "invalid source format: expected map, got int",
 		},
 	}
 
