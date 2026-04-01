@@ -12,25 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package lookeragent_test
+package lookergetagent_test
 
 import (
 	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/googleapis/genai-toolbox/internal/server"
 	"github.com/googleapis/genai-toolbox/internal/sources"
 	"github.com/googleapis/genai-toolbox/internal/testutils"
 	"github.com/googleapis/genai-toolbox/internal/tools"
-	lkr "github.com/googleapis/genai-toolbox/internal/tools/looker/lookeragent"
+	lkr "github.com/googleapis/genai-toolbox/internal/tools/looker/lookergetagent"
 	"github.com/googleapis/genai-toolbox/internal/util/parameters"
 	"github.com/looker-open-source/sdk-codegen/go/rtl"
 	v4 "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
-func TestParseFromYamlLookerAgent(t *testing.T) {
+func TestParseFromYaml(t *testing.T) {
 	ctx, err := testutils.ContextWithNewLogger()
 	if err != nil {
 		t.Fatalf("unexpected error: %s", err)
@@ -44,15 +43,15 @@ func TestParseFromYamlLookerAgent(t *testing.T) {
 			desc: "basic example",
 			in: `
             kind: tool
-            name: agent_manage
-            type: looker-agent
+            name: test_tool
+            type: looker-get-agent
             source: my-instance
             description: some description
                                 `,
 			want: server.ToolConfigs{
-				"agent_manage": lkr.Config{
-					Name:         "agent_manage",
-					Type:         "looker-agent",
+				"test_tool": lkr.Config{
+					Name:         "test_tool",
+					Type:         "looker-get-agent",
 					Source:       "my-instance",
 					Description:  "some description",
 					AuthRequired: []string{},
@@ -62,7 +61,6 @@ func TestParseFromYamlLookerAgent(t *testing.T) {
 	}
 	for _, tc := range tcs {
 		t.Run(tc.desc, func(t *testing.T) {
-			// Parse contents
 			_, _, _, got, _, _, err := server.UnmarshalResourceConfig(ctx, testutils.FormatYaml(tc.in))
 			if err != nil {
 				t.Fatalf("unable to unmarshal: %s", err)
@@ -74,7 +72,7 @@ func TestParseFromYamlLookerAgent(t *testing.T) {
 	}
 }
 
-func TestFailParseFromYamlLookerAgent(t *testing.T) {
+func TestFailParseFromYaml(t *testing.T) {
 	ctx, err := testutils.ContextWithNewLogger()
 	if err != nil {
 		t.Fatalf("unexpected error: %s", err)
@@ -88,8 +86,8 @@ func TestFailParseFromYamlLookerAgent(t *testing.T) {
 			desc: "Invalid method",
 			in: `
             kind: tool
-            name: agent_manage
-            type: looker-agent
+            name: test_tool
+            type: looker-get-agent
             source: my-instance
             method: GOT
             description: some description
@@ -99,7 +97,6 @@ func TestFailParseFromYamlLookerAgent(t *testing.T) {
 	}
 	for _, tc := range tcs {
 		t.Run(tc.desc, func(t *testing.T) {
-			// Parse contents
 			_, _, _, _, _, _, err := server.UnmarshalResourceConfig(ctx, testutils.FormatYaml(tc.in))
 			if err == nil {
 				t.Fatalf("expect parsing to fail")
@@ -141,15 +138,15 @@ func (m MockSourceProvider) GetSource(name string) (sources.Source, bool) {
 	return m.source, true
 }
 
-func TestInvokeLookerAgentValidation(t *testing.T) {
+func TestInvokeValidation(t *testing.T) {
 	ctx, err := testutils.ContextWithNewLogger()
 	if err != nil {
 		t.Fatalf("unexpected error: %s", err)
 	}
 
 	cfg := lkr.Config{
-		Name:        "agent_manage",
-		Type:        "looker-agent",
+		Name:        "test_tool",
+		Type:        "looker-get-agent",
 		Source:      "my-instance",
 		Description: "test description",
 	}
@@ -167,50 +164,9 @@ func TestInvokeLookerAgentValidation(t *testing.T) {
 		wantErr string
 	}{
 		{
-			desc: "missing agent_id for get",
-			params: parameters.ParamValues{
-				{Name: "operation", Value: "get"},
-			},
-			wantErr: "get operation: agent_id must be specified",
-		},
-		{
-			desc: "missing name for create",
-			params: parameters.ParamValues{
-				{Name: "operation", Value: "create"},
-			},
-			wantErr: "create operation: name must be specified",
-		},
-		{
-			desc: "missing agent_id for update",
-			params: parameters.ParamValues{
-				{Name: "operation", Value: "update"},
-			},
-			wantErr: "update operation: agent_id must be specified",
-		},
-		{
-			desc: "missing agent_id for delete",
-			params: parameters.ParamValues{
-				{Name: "operation", Value: "delete"},
-			},
-			wantErr: "delete operation: agent_id must be specified",
-		},
-		{
-			desc: "invalid source format",
-			params: parameters.ParamValues{
-				{Name: "operation", Value: "create"},
-				{Name: "name", Value: "test"},
-				{Name: "sources", Value: []any{123}}, // Should be string
-			},
-			wantErr: "invalid source format: expected string",
-		},
-		{
-			desc: "invalid source JSON",
-			params: parameters.ParamValues{
-				{Name: "operation", Value: "create"},
-				{Name: "name", Value: "test"},
-				{Name: "sources", Value: []any{"invalid json"}},
-			},
-			wantErr: "error parsing source JSON",
+			desc:    "missing agent_id",
+			params:  parameters.ParamValues{},
+			wantErr: "agent_id must be specified",
 		},
 	}
 
@@ -225,12 +181,13 @@ func TestInvokeLookerAgentValidation(t *testing.T) {
 			}
 		})
 	}
+
 }
 
-func TestManifestLookerAgent(t *testing.T) {
+func TestManifest(t *testing.T) {
 	cfg := lkr.Config{
-		Name:        "agent_manage",
-		Type:        "looker-agent",
+		Name:        "test_tool",
+		Type:        "looker-get-agent",
 		Source:      "my-instance",
 		Description: "test description",
 	}
@@ -245,7 +202,7 @@ func TestManifestLookerAgent(t *testing.T) {
 		t.Errorf("manifest description mismatch: got %q, want %q", manifest.Description, cfg.Description)
 	}
 
-	expectedParams := []string{"operation", "agent_id", "name", "instructions", "sources", "code_interpreter"}
+	expectedParams := []string{"agent_id"}
 	for _, p := range expectedParams {
 		found := false
 		for _, mp := range manifest.Parameters {
@@ -260,10 +217,10 @@ func TestManifestLookerAgent(t *testing.T) {
 	}
 }
 
-func TestMcpManifestLookerAgent(t *testing.T) {
+func TestMcpManifest(t *testing.T) {
 	cfg := lkr.Config{
-		Name:        "agent_manage",
-		Type:        "looker-agent",
+		Name:        "test_tool",
+		Type:        "looker-get-agent",
 		Source:      "my-instance",
 		Description: "test description",
 	}
@@ -278,55 +235,11 @@ func TestMcpManifestLookerAgent(t *testing.T) {
 		t.Errorf("mcp manifest name mismatch: got %q, want %q", mcp.Name, cfg.Name)
 	}
 
-	// Verify parameter existence and basic properties in MCP InputSchema
 	properties := mcp.InputSchema.Properties
-	expectedParams := []string{"operation", "agent_id", "name", "instructions", "sources", "code_interpreter"}
+	expectedParams := []string{"agent_id"}
 	for _, p := range expectedParams {
 		if _, ok := properties[p]; !ok {
 			t.Errorf("parameter %q not found in MCP properties", p)
-		}
-	}
-
-	// Verify allowed values for operation via GetParameters
-	params := tool.GetParameters()
-	var opParam *parameters.StringParameter
-	for _, p := range params {
-		if p.GetName() == "operation" {
-			opParam = p.(*parameters.StringParameter)
-			break
-		}
-	}
-	if opParam == nil {
-		t.Fatal("operation parameter not found via GetParameters")
-	}
-
-	gotAllowed := opParam.GetAllowedValues()
-	wantAllowed := []any{"list", "get", "create", "update", "delete"}
-	if diff := cmp.Diff(wantAllowed, gotAllowed, cmpopts.SortSlices(func(a, b any) bool { return a.(string) < b.(string) })); diff != "" {
-		t.Errorf("operation allowed values mismatch: diff %v", diff)
-	}
-
-	// Verify default values in MCP manifest
-	expectedDefaults := map[string]any{
-		"agent_id":         "",
-		"name":             "",
-		"instructions":     "",
-		"sources":          []any{},
-		"code_interpreter": false,
-	}
-
-	for param, wantDefault := range expectedDefaults {
-		prop, ok := properties[param]
-		if !ok {
-			continue
-		}
-		gotDefault := prop.Default
-		if gotDefault == nil {
-			t.Errorf("parameter %q should have default value in MCP manifest", param)
-			continue
-		}
-		if diff := cmp.Diff(wantDefault, gotDefault); diff != "" {
-			t.Errorf("default value mismatch for %q in MCP manifest: diff %v", param, diff)
 		}
 	}
 }

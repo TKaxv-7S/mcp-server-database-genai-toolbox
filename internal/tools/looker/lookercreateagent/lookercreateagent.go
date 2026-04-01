@@ -11,11 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package lookeragent
+package lookercreateagent
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -30,7 +29,7 @@ import (
 	v4 "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
-const resourceType string = "looker-agent"
+const resourceType string = "looker-create-agent"
 
 func init() {
 	if !tools.Register(resourceType, newConfig) {
@@ -70,15 +69,28 @@ func (cfg Config) ToolConfigType() string {
 }
 
 func (cfg Config) Initialize(srcs map[string]sources.Source) (tools.Tool, error) {
-	operationParameter := parameters.NewStringParameterWithAllowedValues("operation", "The operation to perform. Must be one of: `list`, `get`, `create`, `update`, or `delete`.", []any{"list", "get", "create", "update", "delete"})
-	agentIdParameter := parameters.NewStringParameterWithDefault("agent_id", "", "The ID of the agent. Required for `get`, `update`, and `delete` operations.")
-	nameParameter := parameters.NewStringParameterWithDefault("name", "", "The name of the agent. Required for `create` operation.")
-	instructionsParameter := parameters.NewStringParameterWithDefault("instructions", "", "The instructions (system prompt) for the agent. Used for `create` and `update` operations.")
-	sourcesParameter := parameters.NewArrayParameterWithDefault("sources", []any{}, "Optional. A list of JSON-encoded data sources for the agent (e.g., ['{\"model\": \"my_model\", \"explore\": \"my_explore\"}']).", parameters.NewStringParameter("source", "A JSON-encoded source object with 'model' and 'explore' keys."))
-	codeInterpreterParameter := parameters.NewBooleanParameterWithDefault("code_interpreter", false, "Optional. Enables Code Interpreter for this Agent. Used for `create` and `update` operations.")
-	params := parameters.Parameters{operationParameter, agentIdParameter, nameParameter, instructionsParameter, sourcesParameter, codeInterpreterParameter}
+	nameParameter := parameters.NewStringParameterWithDefault("name", "", "The name of the agent.")
+	instructionsParameter := parameters.NewStringParameterWithDefault("instructions", "", "The instructions (system prompt) for the agent.")
+	sourcesParameter := parameters.NewArrayParameterWithDefault(
+		"sources",
+		[]any{},
+		"Optional. A list of JSON-encoded data sources for the agent (e.g., [{\"model\": \"my_model\", \"explore\": \"my_explore\"}]).",
+		parameters.NewMapParameter(
+			"source",
+			"A JSON-encoded source object with 'model' and 'explore' keys.",
+		    "",
+		),
+	)
+	codeInterpreterParameter := parameters.NewBooleanParameterWithDefault("code_interpreter", false, "Optional. Enables Code Interpreter for this Agent.")
+	params := parameters.Parameters{nameParameter, instructionsParameter, sourcesParameter, codeInterpreterParameter}
 
 	annotations := cfg.Annotations
+	if annotations == nil {
+		readOnlyHint := false
+		annotations = &tools.ToolAnnotations{
+			ReadOnlyHint: &readOnlyHint,
+		}
+	}
 
 	mcpManifest := tools.GetMcpManifest(cfg.Name, cfg.Description, cfg.AuthRequired, params, annotations)
 
@@ -127,13 +139,7 @@ func (t Tool) Invoke(ctx context.Context, resourceMgr tools.SourceProvider, para
 	mapParams := params.AsMap()
 	logger.DebugContext(ctx, fmt.Sprintf("%s params = ", t.Name), mapParams)
 
-	var operation, agentId, name, instructions string
-	if v, ok := mapParams["operation"].(string); ok {
-		operation = v
-	}
-	if v, ok := mapParams["agent_id"].(string); ok {
-		agentId = v
-	}
+	var name, instructions string
 	if v, ok := mapParams["name"].(string); ok {
 		name = v
 	}
@@ -141,98 +147,43 @@ func (t Tool) Invoke(ctx context.Context, resourceMgr tools.SourceProvider, para
 		instructions = v
 	}
 
-	var agentSources []v4.Source
-	if raw, ok := mapParams["sources"].([]any); ok {
-		for _, rs := range raw {
-			sStr, ok := rs.(string)
-			if !ok {
-				return nil, util.NewClientServerError("invalid source format: expected string", http.StatusBadRequest, nil)
-			}
-			var s v4.Source
-			if err := json.Unmarshal([]byte(sStr), &s); err != nil {
-				return nil, util.NewClientServerError(fmt.Sprintf("error parsing source JSON %q: %v", sStr, err), http.StatusBadRequest, err)
-			}
-			agentSources = append(agentSources, s)
-		}
-	}
+	sources, _ := mapParams["sources"].([]any)
 
+	agentSources := make([]v4.Source, 0)
+	for _, s := range sources {
+		model := s.(map[string]any)["model"].(string)
+		explore := s.(map[string]any)["explore"].(string)
+		agentSources = append(agentSources, v4.Source{
+			Model:   &model,
+			Explore: &explore,
+		})
+	}
+	
 	codeInterpreter, hasCodeInterpreter := mapParams["code_interpreter"].(bool)
 
-	switch operation {
-	case "list":
-		resp, err := sdk.SearchAgents(v4.RequestSearchAgents{}, source.LookerApiSettings())
-		if err != nil {
-			return nil, util.NewClientServerError(fmt.Sprintf("error making search_agents request: %s", err), http.StatusInternalServerError, err)
-		}
-		return resp, nil
-	case "get":
-		if agentId == "" {
-			return nil, util.NewClientServerError(fmt.Sprintf("%s operation: agent_id must be specified", operation), http.StatusBadRequest, nil)
-		}
-		resp, err := sdk.GetAgent(agentId, "", source.LookerApiSettings())
-		if err != nil {
-			return nil, util.NewClientServerError(fmt.Sprintf("error making get_agent request: %s", err), http.StatusInternalServerError, err)
-		}
-		return resp, nil
-	case "create":
-		if name == "" {
-			return nil, util.NewClientServerError(fmt.Sprintf("%s operation: name must be specified", operation), http.StatusBadRequest, nil)
-		}
-		body := v4.WriteAgent{
-			Name: &name,
-		}
-		if instructions != "" {
-			body.Context = &v4.Context{
-				Instructions: &instructions,
-			}
-		}
-		if len(agentSources) > 0 {
-			body.Sources = &agentSources
-		}
-		if hasCodeInterpreter {
-			body.CodeInterpreter = &codeInterpreter
-		}
-		resp, err := sdk.CreateAgent(body, "", source.LookerApiSettings())
-		if err != nil {
-			return nil, util.NewClientServerError(fmt.Sprintf("error making create_agent request: %s", err), http.StatusInternalServerError, err)
-		}
-		return resp, nil
-	case "update":
-		if agentId == "" {
-			return nil, util.NewClientServerError(fmt.Sprintf("%s operation: agent_id must be specified", operation), http.StatusBadRequest, nil)
-		}
-		body := v4.WriteAgent{}
-		if name != "" {
-			body.Name = &name
-		}
-		if instructions != "" {
-			body.Context = &v4.Context{
-				Instructions: &instructions,
-			}
-		}
-		if len(agentSources) > 0 {
-			body.Sources = &agentSources
-		}
-		if hasCodeInterpreter {
-			body.CodeInterpreter = &codeInterpreter
-		}
-		resp, err := sdk.UpdateAgent(agentId, body, "", source.LookerApiSettings())
-		if err != nil {
-			return nil, util.NewClientServerError(fmt.Sprintf("error making update_agent request: %s", err), http.StatusInternalServerError, err)
-		}
-		return resp, nil
-	case "delete":
-		if agentId == "" {
-			return nil, util.NewClientServerError(fmt.Sprintf("%s operation: agent_id must be specified", operation), http.StatusBadRequest, nil)
-		}
-		resp, err := sdk.DeleteAgent(agentId, "", source.LookerApiSettings())
-		if err != nil {
-			return nil, util.NewClientServerError(fmt.Sprintf("error making delete_agent request: %s", err), http.StatusInternalServerError, err)
-		}
-		return resp, nil
-	default:
-		return nil, util.NewClientServerError(fmt.Sprintf("unknown operation: %s. Must be one of `list`, `get`, `create`, `update`, or `delete`", operation), http.StatusBadRequest, nil)
+	if name == "" {
+		return nil, util.NewClientServerError(fmt.Sprintf("%s operation: name must be specified", t.Type), http.StatusBadRequest, nil)
 	}
+	body := v4.WriteAgent{
+		Name: &name,
+	}
+	if instructions != "" {
+		body.Context = &v4.Context{
+			Instructions: &instructions,
+		}
+	}
+	if len(agentSources) > 0 {
+		body.Sources = &agentSources
+	}
+	if hasCodeInterpreter {
+		body.CodeInterpreter = &codeInterpreter
+	}
+	resp, err := sdk.CreateAgent(body, "", source.LookerApiSettings())
+	if err != nil {
+		return nil, util.NewClientServerError(fmt.Sprintf("error making create_agent request: %s", err), http.StatusInternalServerError, err)
+	}
+	return resp, nil
+
 }
 
 func (t Tool) EmbedParams(ctx context.Context, paramValues parameters.ParamValues, embeddingModelsMap map[string]embeddingmodels.EmbeddingModel) (parameters.ParamValues, error) {
