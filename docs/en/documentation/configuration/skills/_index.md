@@ -40,6 +40,7 @@ toolbox <tool-source> skills-generate \
 - `--license-header`: (Optional) Optional license header to prepend to generated node scripts.
 - `--additional-notes`: (Optional) Additional notes to add under the Usage section of the generated SKILL.md.
 - `--invocation-mode`: (Optional) Invocation mode for the generated scripts: 'binary' or 'npx' (default: "binary").
+- `--toolbox-version`: (Optional) Version of @toolbox-sdk/server to use for npx approach (defaults to current toolbox version).
 
 {{< notice note >}}
 **Note:** The `<skill-name>` must follow the Agent Skill [naming convention](https://agentskills.io/specification): it must contain only lowercase alphanumeric characters and hyphens, cannot start or end with a hyphen, and cannot contain consecutive hyphens (e.g., `my-skill`, `data-processing`).

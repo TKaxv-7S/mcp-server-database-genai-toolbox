@@ -166,7 +166,7 @@ const command = os.platform() === 'win32' ? 'npx.cmd' : 'npx';
 
 const processedArgs = os.platform() === 'win32' ? args.map(arg => arg.includes('"') ? '"' + arg.replace(/"/g, '""') + '"' : arg) : args;
 
-const npxArgs = ["--yes", "@toolbox-sdk/server", "--log-level", "error", ...configArgs, "invoke", toolName, "--user-agent-metadata", userAgent, ...processedArgs];
+const npxArgs = ["--yes", "@toolbox-sdk/server@{{.ToolboxVersion}}", "--log-level", "error", ...configArgs, "invoke", toolName, "--user-agent-metadata", userAgent, ...processedArgs];
 
 const child = spawn(command, npxArgs, { shell: os.platform() === 'win32', stdio: 'inherit', env });
 {{else}}
@@ -218,17 +218,19 @@ type scriptData struct {
 	ConfigArgs     string
 	LicenseHeader  string
 	InvocationMode string
+	ToolboxVersion string
 }
 
 // generateScriptContent creates the content for a Node.js wrapper script.
 // This script invokes the toolbox CLI with the appropriate configuration
 // (using a generated config) and arguments to execute the specific tool.
-func generateScriptContent(name string, configArgs string, licenseHeader string, mode string) (string, error) {
+func generateScriptContent(name string, configArgs string, licenseHeader string, mode string, version string) (string, error) {
 	data := scriptData{
 		Name:           name,
 		ConfigArgs:     configArgs,
 		LicenseHeader:  licenseHeader,
 		InvocationMode: mode,
+		ToolboxVersion: version,
 	}
 
 	tmpl, err := template.New("script").Parse(nodeScriptTemplate)
