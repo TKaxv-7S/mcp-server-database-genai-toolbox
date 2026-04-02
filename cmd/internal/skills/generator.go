@@ -162,25 +162,13 @@ if (process.env.GEMINI_CLI === '1') {
 const args = process.argv.slice(2);
 
 {{if eq .InvocationMode "npx"}}
-const npxArgs = ["--yes", "@toolbox-sdk/server", "--log-level", "error", ...configArgs, "invoke", toolName, "--user-agent-metadata", userAgent, ...args];
+const command = os.platform() === 'win32' ? 'npx.cmd' : 'npx';
 
-let command = 'npx';
-let spawnArgs = npxArgs;
+const processedArgs = os.platform() === 'win32' ? args.map(arg => arg.includes('"') ? '"' + arg.replace(/"/g, '""') + '"' : arg) : args;
 
-if (os.platform() === 'win32') {
-    const nodeDir = path.dirname(process.execPath);
-    const npxCliJs = path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npx-cli.js');
+const npxArgs = ["--yes", "@toolbox-sdk/server", "--log-level", "error", ...configArgs, "invoke", toolName, "--user-agent-metadata", userAgent, ...processedArgs];
 
-    if (fs.existsSync(npxCliJs)) {
-        command = process.execPath; 
-        spawnArgs = [npxCliJs, ...npxArgs]; 
-    } else {
-        console.error("Error: Could not find the npx executable to launch.");
-        process.exit(1);
-    }
-}
-
-const child = spawn(command, spawnArgs, { stdio: 'inherit', env });
+const child = spawn(command, npxArgs, { shell: os.platform() === 'win32', stdio: 'inherit', env });
 {{else}}
 function getToolboxPath() {
     if (process.env.GEMINI_CLI === '1') {
