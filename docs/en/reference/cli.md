@@ -73,6 +73,7 @@ toolbox skills-generate --name <name> --description <description> --toolset <too
 - `--output-dir`: (Optional) Directory to output generated skills (default: "skills").
 - `--license-header`: (Optional) Optional license header to prepend to generated node scripts.
 - `--additional-notes`: (Optional) Additional notes to add under the Usage section of the generated SKILL.md.
+- `--invocation-mode`: (Optional) Invocation mode for the generated scripts: 'binary' or 'npx' (default: "binary").
 
 For more detailed instructions, see [Generate Agent Skills](../documentation/configuration/skills/_index.md).
 

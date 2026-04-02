@@ -160,12 +160,13 @@ if (process.env.GEMINI_CLI === '1') {
 }
 
 const args = process.argv.slice(2);
+
+{{if eq .InvocationMode "npx"}}
 const npxArgs = ["--yes", "@toolbox-sdk/server", "--log-level", "error", ...configArgs, "invoke", toolName, "--user-agent-metadata", userAgent, ...args];
 
 let command = 'npx';
 let spawnArgs = npxArgs;
 
-// The Windows Dependency-Free Bypass
 if (os.platform() === 'win32') {
     const nodeDir = path.dirname(process.execPath);
     const npxCliJs = path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npx-cli.js');
@@ -180,6 +181,38 @@ if (os.platform() === 'win32') {
 }
 
 const child = spawn(command, spawnArgs, { stdio: 'inherit', env });
+{{else}}
+function getToolboxPath() {
+    if (process.env.GEMINI_CLI === '1') {
+        const localPath = path.resolve(__dirname, '../../../toolbox');
+        if (fs.existsSync(localPath)) {
+            return localPath;
+        }
+    }
+    try {
+        const checkCommand = process.platform === 'win32' ? 'where toolbox' : 'which toolbox';
+        const globalPath = execSync(checkCommand, { stdio: 'pipe', encoding: 'utf-8' }).trim();
+        if (globalPath) {
+            return globalPath.split('\n')[0].trim();
+        }
+        throw new Error("Toolbox binary not found");
+    } catch (e) {
+        throw new Error("Toolbox binary not found");
+    }
+}
+
+let toolboxBinary;
+try {
+    toolboxBinary = getToolboxPath();
+} catch (err) {
+    console.error("Error:", err.message);
+    process.exit(1);
+}
+
+const toolboxArgs = ["--log-level", "error", ...configArgs, "invoke", toolName, "--user-agent-metadata", userAgent, ...args];
+
+const child = spawn(toolboxBinary, toolboxArgs, { stdio: 'inherit', env });
+{{end}}
 
 child.on('close', (code) => {
   process.exit(code);
@@ -192,19 +225,21 @@ child.on('error', (err) => {
 `
 
 type scriptData struct {
-	Name          string
-	ConfigArgs    string
-	LicenseHeader string
+	Name           string
+	ConfigArgs     string
+	LicenseHeader  string
+	InvocationMode string
 }
 
 // generateScriptContent creates the content for a Node.js wrapper script.
 // This script invokes the toolbox CLI with the appropriate configuration
 // (using a generated config) and arguments to execute the specific tool.
-func generateScriptContent(name string, configArgs string, licenseHeader string) (string, error) {
+func generateScriptContent(name string, configArgs string, licenseHeader string, mode string) (string, error) {
 	data := scriptData{
-		Name:          name,
-		ConfigArgs:    configArgs,
-		LicenseHeader: licenseHeader,
+		Name:           name,
+		ConfigArgs:     configArgs,
+		LicenseHeader:  licenseHeader,
+		InvocationMode: mode,
 	}
 
 	tmpl, err := template.New("script").Parse(nodeScriptTemplate)
