@@ -363,7 +363,7 @@ func (a AuthService) validateOpaqueToken(ctx context.Context, tokenStr string) e
 
 	// Verify expiration (with 1 minute leeway) to account for potential time difference between Toolbox and the auth server
 	const leeway = 60
-	if introspectResp.Exp > 0 && time.Now().Unix() > (introspectResp.Exp + leeway) {
+	if introspectResp.Exp > 0 && time.Now().Unix() > (introspectResp.Exp+leeway) {
 		logger.WarnContext(ctx, "token has expired: exp=%d, now=%d", introspectResp.Exp, time.Now().Unix())
 		return &MCPAuthError{Code: http.StatusUnauthorized, Message: "token has expired", ScopesRequired: a.ScopesRequired}
 	}
