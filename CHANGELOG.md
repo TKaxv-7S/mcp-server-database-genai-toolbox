@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.32.0](https://github.com/googleapis/genai-toolbox/compare/v0.31.0...v0.32.0) (2026-04-03)
+
+
+### Features
+
+* **bigquery:** Add conversational analytics tools for Data Agents ([#2517](https://github.com/googleapis/genai-toolbox/issues/2517)) ([2490a4b](https://github.com/googleapis/genai-toolbox/commit/2490a4b4fb3c9232270f6f4347b8556d2d6e0390))
+* **embeddingModel:** Add Backend API selection fields ([#2592](https://github.com/googleapis/genai-toolbox/issues/2592)) ([912aa9e](https://github.com/googleapis/genai-toolbox/commit/912aa9edd7bc3ce932828003fbd67d1a3b9c2348))
+* **server:** MCP endpoints API consolidation ([#2829](https://github.com/googleapis/genai-toolbox/issues/2829)) ([c3059c2](https://github.com/googleapis/genai-toolbox/commit/c3059c233502a1e99abb4d87e4b9bfe7c6ea7a4a))
+
+
+### Bug Fixes
+
+* **bigquery:** Add impersonateServiceAccount to prebuilt config ([#2770](https://github.com/googleapis/genai-toolbox/issues/2770)) ([9c3a748](https://github.com/googleapis/genai-toolbox/commit/9c3a748de43eb588586f22590ff74bd433b24d68))
+* **skill:** Fix skill generation template ([#2914](https://github.com/googleapis/genai-toolbox/issues/2914)) ([a01a15e](https://github.com/googleapis/genai-toolbox/commit/a01a15ed1aa9a83eda8362578fed2e3a3c8dde99))
+* **tests/bigquery:** Implement uuid-based isolation and reliable resource cleanup ([#2547](https://github.com/googleapis/genai-toolbox/issues/2547)) ([479d842](https://github.com/googleapis/genai-toolbox/commit/479d8424046406d50af02b0602e6bac58aea534f))
+* **tests/Bigtable:** Implement uuid-based isolation and reliable resource cleanup ([#2880](https://github.com/googleapis/genai-toolbox/issues/2880)) ([a769f15](https://github.com/googleapis/genai-toolbox/commit/a769f15c3ab8d631198546909a6dd1f09446e6b0))
+
 ## [0.31.0](https://github.com/googleapis/genai-toolbox/compare/v0.30.0...v0.31.0) (2026-03-26)
 
 
